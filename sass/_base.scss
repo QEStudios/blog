@@ -1,0 +1,142 @@
+@use "variables";
+
+* {
+  @include variables.box-sizing;
+  line-height: 1.5;
+}
+
+html {
+  color: variables.$default-color;
+  background-color: variables.$background-color;
+  font-family: variables.$serif-primary;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: variables.$default-shade;
+  font-family: variables.$sans-serif;
+  line-height: normal;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+::selection {
+  background: rebeccapurple;
+  color: white;
+}
+
+blockquote {
+  border-left: 0.25rem solid variables.$grey;
+  color: variables.$blockquote-color;
+  margin: 0.8rem 0;
+  padding: 0.5rem 1rem;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 600px) {
+    padding: 0 5rem 0 1.25rem;
+  }
+}
+
+img {
+  display: block;
+  margin: 0 0 1rem;
+  max-width: 100%;
+}
+
+table {
+  margin: 0 auto;
+  color: variables.$default-shade;
+  border: 1px solid variables.$grey;
+  font-size: 12pt;
+  border-collapse: collapse;
+}
+
+table thead th,
+table tfoot th {
+  color: variables.$default-shade;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+table caption {
+  padding: 0.5em;
+}
+
+table th,
+table td {
+  padding: 0.5em;
+  border: 1px solid variables.$grey;
+}
+
+main,
+footer,
+.nav-container {
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  padding-inline: 1rem;
+}
+
+@media (max-width: 600px) {
+
+  main,
+  footer,
+  .nav-container {
+    max-width: 100%;
+  }
+}
+
+// Justify text content on sections and index
+a div p {
+  text-align: justify;
+}
+
+// 404 page
+.notfound {
+  position: relative;
+  text-align: center;
+  margin: 4rem 0;
+
+  &-error {
+    font-size: 4rem;
+    margin: 1rem 0;
+  }
+
+  &-line {
+    border-top: 0.4rem solid variables.$default-shade;
+    display: block;
+    margin: 0 auto 3rem;
+    width: 4rem;
+  }
+
+  &-message {
+    max-width: 25rem;
+    margin: 0 auto;
+  }
+}
+
+// Footnotes
+.footnote-definition {
+  sup {
+    top: -0.2.5em;
+    font-size: 0.75em;
+    display: inline;
+  }
+
+  p {
+    display: inline;
+  }
+}

@@ -1,0 +1,57 @@
+@use "variables";
+
+header {
+    box-shadow: 0 2px 2px -2px variables.$shadow-color;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        padding-block-end: 0.5rem;
+    }
+}
+
+.nav-title {
+    @include variables.transition(all 0.2s ease-out);
+    color: variables.$default-color;
+
+    @media (max-width: 600px) {
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &:hover,
+    &:focus {
+        opacity: 0.6;
+    }
+}
+
+header ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+header li {
+    @include variables.transition(all 0.2s ease-out);
+    color: variables.$default-color;
+    display: inline-block;
+    opacity: 0.6;
+    padding: 0.25rem;
+
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+}
+
+header a {
+    color: variables.$default-color;
+}
