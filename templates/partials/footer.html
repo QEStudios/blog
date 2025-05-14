@@ -1,20 +1,21 @@
 <footer>
   <span class="copyright">
     {%- if config.extra.footer -%}
-    © 2024 {{ config.extra.author | default(value="Miguel Pimentel")}}. {{ config.extra.footer.info |
+    {{ config.extra.copyright | default(value="© 2025")}} {{ config.extra.author | default(value="SKM GEEK")}}.
+    {{ config.extra.footer.info |
     default(value='Powered by Zola and Mabuya.') | safe }}
     {%- else -%}
-    © 2024 Miguel Pimentel. Powered by <a href="https://www.getzola.org"><u>Zola</u></a> and <a
+    © 2025 SKM GEEK. Powered by <a href="https://www.getzola.org"><u>Zola</u></a> and <a
       href="https://github.com/semanticdata/mabuya">Mabuya</a>.
     {%- endif -%}
   </span>
 
   <nav class="navigation-footer">
     <ul>
-      <li><a href="https://forgetfulnotes.com">Digital Garden</a></li>
-      <li><a href="https://github.com/semanticdata">GitHub</a></li>
-      <li><a href="https://instagram.com/miguelapv">Instagram</a></li>
-      <li><a href="https://www.linkedin.com/in/miguelpimentel29/">Linkedin</a></li>
+      <li><a href="https://skmgeek.com">Main Website</a></li>
+      <li><a href="https://github.com/QEStudios">GitHub</a></li>
+      <li><a href="https://discord.com/users/665724183094755359">Discord</a></li>
+      <li><a href="https://youtube.com/skmgeek">Youtube</a></li>
     </ul>
   </nav>
 </footer>

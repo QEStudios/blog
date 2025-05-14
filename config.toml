@@ -1,5 +1,5 @@
-base_url = "https://mabuya.vercel.app/"
-title = "Mabuya"
+base_url = "https://blog.skmgeek.com/"
+title = "SKM GEEK's Blog"
 description = "Mabuya is a minimal Zola theme for building light and SEO-ready blogs. Put your work front and center with Mabuya as the base of your project."
 author = "Miguel Pimentel"
 
@@ -17,10 +17,10 @@ highlight_theme = "visual-studio-dark"
 smart_punctuation = true
 
 [extra]
-author = "Miguel Pimentel"
-email = "contact@miguelpimentel.do"
-github = "https://github.com/semanticdata"
-timeformat = "%B %e, %Y"                   # e.g. June 14, 2021
+author = "SKM GEEK"
+email = "qestudios17@gmail.com"
+github = "https://github.com/QEStudios"
+timeformat = "%Y-%m-%d"                 # e.g. June 14, 2021
 
 [[extra.menu]]
 name = "Archive"
