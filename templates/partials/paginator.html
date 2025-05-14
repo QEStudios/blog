@@ -18,4 +18,8 @@
   <a href="{{ paginator.next | safe }}" class="right arrow">&#8594;</a>
   {%- endif %}
 </section>
+{% else %}
+<section class="pagination">
+  <p>Nothing here!</p>
+</section>
 {% endif %}
