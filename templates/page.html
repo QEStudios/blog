@@ -11,6 +11,9 @@
     <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date(format=config.extra.timeformat |
       default(value="%B
       %e, %Y"))}}</time>
+    <span>
+      (<a href="{{ page.permalink | safe }}">Permalink</a>)
+    </span>
   </section>
   <h1 class="post-title">{{ page.title }}</h1>
   <section class="post-line"></section>
