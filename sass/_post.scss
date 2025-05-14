@@ -42,12 +42,12 @@
     margin: 0 auto 0.5rem;
   }
 
-  img + em {
+  img+em {
     color: variables.$default-shade;
     display: block;
     font-family: variables.$sans-serif;
     font-size: 0.9rem;
-    font-style: normal;
+    font-style: italic;
     text-align: center;
   }
 
