@@ -26,7 +26,7 @@
       display: inline-block;
       margin: 0 0.1rem 0.2rem;
       padding: 0.2rem 0.5rem;
-      background: rgba(0, 0, 0, 0.05);
+      background: variables.$tag-tint;
       border-radius: 5px;
       color: variables.$default-color;
       text-decoration: none;
