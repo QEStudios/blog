@@ -32,3 +32,6 @@ url = "tags"
 
 [extra.footer]
 info = 'Powered by <a href="https://www.getzola.org" target="_blank">Zola</a> and <a href="https://github.com/semanticdata/mabuya">Mabuya</a>.'
+
+[slugify]
+paths_keep_dates = true
