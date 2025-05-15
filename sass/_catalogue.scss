@@ -17,6 +17,10 @@
     }
   }
 
+  &-hint-text {
+    color: variables.$default-tint;
+  }
+
   &-link {
     color: variables.$default-color;
   }

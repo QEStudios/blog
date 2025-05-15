@@ -11,6 +11,7 @@
         {%- if page.description -%} {{ page.description | safe }} {% else -%} {{
         page.content | striptags | truncate(length=280) | safe }} {%- endif -%}
       </p>
+      <p class="catalogue-hint-text">Click to open full post</p>
     </section>
   </a>
   <section class="tags">
