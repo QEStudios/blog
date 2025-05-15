@@ -1,5 +1,3 @@
-{% include "partials/darkmode.html" %}
-
 <header>
   <section class="nav-container">
     <a class="nav-title" href="{{ config.base_url | safe }}">
@@ -14,6 +12,7 @@
         <li><a href="{{ config.base_url | safe }}">Archive</a></li>
         <li><a href="{{ get_url(path='tags') | safe }}">Tags</a></li>
         {% endif %}
+        <li class="darkmode-container">{% include "partials/darkmode.html" %}</li>
       </ul>
     </nav>
   </section>
