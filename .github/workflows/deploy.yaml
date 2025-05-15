@@ -1,0 +1,30 @@
+name: Build and Push Zola Site to `deploy` Branch
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write  # Needed to push to another branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Zola
+        uses: taiki-e/install-action@zola
+
+      - name: Build site
+        run: zola build
+
+      - name: Push `public/` to `deploy` branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: deploy
+          force_orphan: true  # Optional: creates a clean history for the branch
