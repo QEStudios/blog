@@ -2,11 +2,12 @@
 
 {% block content %}
 <article class="post">
+  <h1 class="post-title">{{ page.title }}</h1>
   <section class="post-info">
     {% if page.extra.author -%}
-    <span>Written by</span> {{ page.extra.author }}<br />
+    <span>Written by</span> {{ page.extra.author }}
     {% elif config.extra.author -%}
-    <span>Written by</span> {{ config.extra.author }}<br />
+    <span>Written by</span> {{ config.extra.author }}
     {%- endif %}
     <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date(format=config.extra.timeformat |
       default(value="%B
@@ -15,7 +16,13 @@
       (<a href="{{ page.permalink | safe }}">Permalink</a>)
     </span>
   </section>
-  <h1 class="post-title">{{ page.title }}</h1>
+  <section class="tags">
+    <section class="tags-clouds">
+      {% for tag in page.taxonomies.tags %}
+      <a href="/tags/{{ tag }}">#{{tag}}</a>
+      {% endfor %}
+    </section>
+  </section>
   <section class="post-line"></section>
   {{ page.content | safe }}
 </article>
