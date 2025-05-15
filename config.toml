@@ -1,7 +1,7 @@
 base_url = "https://blog.skmgeek.com/"
 title = "SKM GEEK's Blog"
 description = "Mabuya is a minimal Zola theme for building light and SEO-ready blogs. Put your work front and center with Mabuya as the base of your project."
-author = "Miguel Pimentel"
+author = "SKM GEEK"
 
 compile_sass = true
 generate_feeds = true
