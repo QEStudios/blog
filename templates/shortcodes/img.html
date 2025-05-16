@@ -23,10 +23,12 @@
         {% set url = image.url %}
     {% endif %}
     {% if mdata.width >= mdata.height %}
-        <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" /></a></div>
+        {% set h = s * (mdata.height / mdata.width) | int%}
+        <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" /></a></div>
     {% else %}
-        <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{url}}" alt="{{alt}}" title="{{full_title}}" height="{{s}}" /></a></div>
+        {% set w = s * (mdata.width / mdata.height) | int%}
+        <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" /></a></div>
     {% endif %}
 {% else %}
-    <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{image_path}}" alt="{{alt}}" title="{{full_title}}" /></a></div>
+    <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{image_path}}" alt="{{alt}}" title="{{full_title}}" width="{{mdata.width}}" height="{{mdata.height}}" /></a></div>
 {% endif %}
