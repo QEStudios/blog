@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+  {% set t = "Tags | " ~ config.title %}
+  {% include "partials/head.html" %}
+{% endblock %}
+
 {% block content %}
 <section class="tags">
   <section class="tags-header">

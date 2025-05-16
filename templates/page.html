@@ -1,5 +1,11 @@
 {% extends "base.html"%}
 
+{% block head %}
+{% set t = page.title ~ " (" ~ page.date ~ ") | " ~
+config.title %}
+{% include "partials/head.html" %}
+{% endblock %}
+
 {% block content %}
 <article class="post">
   <h1 class="post-title">{{ page.title }}</h1>
