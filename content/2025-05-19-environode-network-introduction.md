@@ -1,6 +1,6 @@
 ---
 title: Environode Network Introduction
-description: This blog post discusses my ongoing Environode project. Note that as this project is not in a completed state yet, some things may change and not everything is set in stone.
+description: This blog post discusses my ongoing Environode project. Since it's still a work in progress, some things may change, as nothing is fully set in stone.
 date: 2025-05-19
 draft: true
 taxonomies:
