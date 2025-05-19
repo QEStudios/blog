@@ -1,4 +1,5 @@
 {% set image_path = "/files/" ~ src %}
+<div class="img-container"><a class="image-click" href="{{image_path}}"></a>
 {% set mdata = get_image_metadata(path=image_path)%}
 {% if title %}
     {% set full_title = title ~ " (Click to open in new tab)" %}
@@ -24,11 +25,15 @@
     {% endif %}
     {% if mdata.width >= mdata.height %}
         {% set h = s * (mdata.height / mdata.width) | int%}
-        <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" /></a></div>
+        <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" />
     {% else %}
         {% set w = s * (mdata.width / mdata.height) | int%}
-        <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" /></a></div>
+        <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" />
     {% endif %}
 {% else %}
-    <div class="img-container"><a class="image-click" href="{{image_path}}"><img src="{{image_path}}" alt="{{alt}}" title="{{full_title}}" width="{{mdata.width}}" height="{{mdata.height}}" /></a></div>
+    <img src="{{image_path}}" alt="{{alt}}" title="{{full_title}}" width="{{mdata.width}}" height="{{mdata.height}}" />
 {% endif %}
+{% if caption %}
+    <em>{{caption}}</em>
+{% endif %}
+</a></div>
