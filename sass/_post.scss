@@ -45,7 +45,7 @@
     object-fit: contain;
   }
 
-  img+em {
+  img~em {
     color: variables.$default-shade;
     display: block;
     font-family: variables.$sans-serif;
