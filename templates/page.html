@@ -25,7 +25,8 @@ config.title %}
   <section class="tags">
     <section class="tags-clouds">
       {% for tag in page.taxonomies.tags %}
-      <a href="/tags/{{ tag }}">#{{tag}}</a>
+        {% set tag_url = get_taxonomy_url(kind="tags", name=tag) %}
+        <a href="{{ tag_url }}">#{{tag}}</a>
       {% endfor %}
     </section>
   </section>
