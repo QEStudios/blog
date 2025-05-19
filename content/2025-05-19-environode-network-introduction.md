@@ -1,8 +1,12 @@
 ---
 title: Environode Network Introduction
-description: An introduction to my Environode project.
+description: This blog post discusses my ongoing Environode project. Note that as this project is not in a completed state yet, some things may change and not everything is set in stone.
 date: 2025-05-19
 draft: true
+taxonomies:
+  tags:
+    - environode
+    - iot
 ---
 # An introduction to my Environode project.
 This blog post discusses my ongoing Environode project. Note that as this project is not in a completed state yet, some things may change and not everything is set in stone.
