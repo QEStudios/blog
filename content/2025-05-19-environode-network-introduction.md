@@ -40,4 +40,8 @@ Of course, there are a number of downsides to running the project this way. One 
 
 However, for a cheap and easy project, it works great. I got to learn many things while making this project, and these skills will carry on into my other projects too. I plan on integrating some of my other Pico-based projects into the Environode network too, notably my Heximal Clock (which I plan to talk about in a later blog post! 👀).
 
+---
+
+The code for the Environode network will likely be released as Open Source, and if it does I'll include information on how to get it running on your own. However, in its current state it is not ready for release (I'm still just working on breadboards!) and so I won't be releasing the source code in time for this blog post. Sorry about that! You can however subscribe to the [rss](/rss.xml) or [atom](/atom.xml) feed to be updated on my future blog posts.
+
 -skm
