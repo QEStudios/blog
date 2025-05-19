@@ -42,6 +42,6 @@ However, for a cheap and easy project, it works great. I got to learn many thing
 
 ---
 
-The code for the Environode network will likely be released as Open Source, and if it does I'll include information on how to get it running on your own. However, in its current state it is not ready for release (I'm still just working on breadboards!) and so I won't be releasing the source code in time for this blog post. Sorry about that! You can however subscribe to the [rss](/rss.xml) or [atom](/atom.xml) feed to be updated on my future blog posts.
+The code for the Environode network will likely be released as Open Source, and if it does I'll include information on how to get it running on your own. However, in its current state it is not ready for release (I'm still just working on breadboards!) and so I won't be releasing the source code in time for this blog post. Sorry about that! You can, however, subscribe to the [rss](/rss.xml) or [atom](/atom.xml) feed to be updated on my future blog posts.
 
 -skm
