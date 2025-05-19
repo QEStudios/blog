@@ -7,6 +7,7 @@ taxonomies:
   tags:
     - environode
     - iot
+    - raspberry pi pico
 ---
 # An introduction to my Environode project.
 This blog post discusses my ongoing Environode project. Note that as this project is not in a completed state yet, some things may change and not everything is set in stone.
