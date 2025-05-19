@@ -14,4 +14,8 @@ img {
 .img-container {
     text-align: center;
     margin: 0 auto 0.5rem;
+
+    br {
+        display: none;
+    }
 }
