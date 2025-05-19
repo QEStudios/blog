@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>{% block title %}{{ t }}{% endblock title %}</title>
-  <meta name="description" itemprop="about" content="{{config.description}}" />
+  <meta name="description" itemprop="about" content="{%- if page.description -%} {{ page.description }} {% else -%} {{
+        config.description }} {%- endif -%}" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path='assets/favicon-32x32.png') | safe }}" />
   <link rel="icon" type="image/png" sizes="16x16" href="{{ get_url(path='assets/favicon-16x16.png') | safe }}" />
