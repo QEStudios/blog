@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>SKM GEEK&#x27;s Blog - raspberry pi pico</title>
+    <subtitle>Hello! Welcome to my place for putting Things. I share my projects, thoughts, and anything else I feel like here.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://blog.skmgeek.com/tags/raspberry-pi-pico/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://blog.skmgeek.com/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-05-20T00:00:00+00:00</updated>
+    <id>https://blog.skmgeek.com/tags/raspberry-pi-pico/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Environode Network Introduction</title>
+        <published>2025-05-20T00:00:00+00:00</published>
+        <updated>2025-05-20T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              SKM GEEK
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.skmgeek.com/2025-05-20-environode-network-introduction/"/>
+        <id>https://blog.skmgeek.com/2025-05-20-environode-network-introduction/</id>
+        
+        <content type="html" xml:base="https://blog.skmgeek.com/2025-05-20-environode-network-introduction/">&lt;h1 id=&quot;an-introduction-to-my-environode-project&quot;&gt;An introduction to my Environode project.&lt;&#x2F;h1&gt;
+&lt;p&gt;This blog post discusses my ongoing Environode project. Since it’s still a work in progress, some things may change, as nothing is fully set in stone.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;When I found out I could buy a &lt;a href=&quot;https:&#x2F;&#x2F;www.aliexpress.com&#x2F;item&#x2F;1005007393927221.html?pdp_ext_f=%7B%22sku_id%22:%2212000040565295947%22%7D&quot;&gt;Raspberry Pi Pico clone&lt;&#x2F;a&gt; for around $3 AUD on AliExpress, I knew that would be the microcontroller I’d be using for most of my projects. When I found out I could buy a &lt;a href=&quot;https:&#x2F;&#x2F;www.aliexpress.com&#x2F;item&#x2F;1005007393927221.html?pdp_ext_f=%7B%22sku_id%22:%2212000040565295948%22%7D&quot;&gt;&lt;em&gt;Raspberry Pi Pico W&lt;&#x2F;em&gt; clone&lt;&#x2F;a&gt; for under &lt;em&gt;$8&lt;&#x2F;em&gt; AUD, I knew something was up. Microcontrollers like that with proper WiFi support are rarely that cheap.&lt;&#x2F;p&gt;
+&lt;p&gt;Intrigued, I purchased one. Now, there’s always a risk when buying online, and this time was no different. What I received appeared to be exactly what I had hoped for: a Raspberry Pi Pico with WiFi support. But I soon realised it wasn’t a drop-in replacement for an &lt;em&gt;official&lt;&#x2F;em&gt; Raspberry Pi Pico W. This board, which I expected to have an &lt;a href=&quot;https:&#x2F;&#x2F;www.infineon.com&#x2F;cms&#x2F;en&#x2F;product&#x2F;wireless-connectivity&#x2F;airoc-wi-fi-plus-bluetooth-combos&#x2F;wi-fi-4-802.11n&#x2F;cyw43439&#x2F;&quot;&gt;&lt;strong&gt;Infineon CYW43439&lt;&#x2F;strong&gt;&lt;&#x2F;a&gt; chip handling its WiFi connectivity, instead sported an &lt;a href=&quot;https:&#x2F;&#x2F;www.espressif.com&#x2F;sites&#x2F;default&#x2F;files&#x2F;documentation&#x2F;0a-esp8285_datasheet_en.pdf&quot;&gt;&lt;strong&gt;Espressif ESP8285&lt;&#x2F;strong&gt;&lt;&#x2F;a&gt; chip. Not to be deterred, I looked up documentation online for this specific flavour of Pico clone. What I found was pretty much just “Buy an official Pico instead.”&lt;br &#x2F;&gt;
+&lt;em&gt;(I later discovered that the listing’s images clearly showed that the Pico had an Espressif chip. Always make sure to double-check before buying something!)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Naturally, instead of following the advice, I decided to use this clone Pico W to design my own locally hosted environmental sensor network, and this is the topic of this blog post!&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-05-20-pico-1.jpg&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+        
+    
+    
+        
+        &lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-05-20-pico-1.1a537a8b2b103aeb.webp&quot; alt=&quot;Picture showing the clone Raspberry Pi Pico W&quot; title=&quot;Picture showing the clone Raspberry Pi Pico W (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;487&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;The clone Raspberry Pi Pico W&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;The clone Raspberry Pi Pico “W” is configured to use AT commands over UART to communicate with the ESP8285. This is the same as how &lt;a href=&quot;https:&#x2F;&#x2F;www.jaycar.com.au&#x2F;p&#x2F;XC4411&quot;&gt;those “WiFi enabled” Arduino UNO clones&lt;&#x2F;a&gt; work. This means you have to first flash the firmware of the ESP8285 by first flashing the RP2040 with a basic program to pass the serial commands through to the ESP8285, then plugging in the clone whilst holding down the ESP’s dedicated BOOT button (lovingly mislabeled as &lt;em&gt;DOOT&lt;&#x2F;em&gt; on my clone). I figured this out from &lt;a href=&quot;https:&#x2F;&#x2F;forums.raspberrypi.com&#x2F;viewtopic.php?t=361532#p2174428&quot;&gt;a few manufacturer videos in Chinese&lt;&#x2F;a&gt;, which some kind internet soul had uploaded to their MEGA account. So far, the user experience is lacking.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;(&lt;a href=&quot;https:&#x2F;&#x2F;mega.nz&#x2F;folder&#x2F;VqMg2YQC#seTJR8HW_Eu3lB-ttfzXyQ&quot;&gt;I’ve reuploaded the files to my own MEGA account to preserve them, you can download them here.&lt;&#x2F;a&gt;)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-05-20-doot-1.jpg&quot;&gt;
+
+
+    
+
+
+    
+        
+    
+    
+    
+    
+    
+        
+        
+    
+    
+        
+        &lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-05-20-doot-1.3edd47e2cfadd259.webp&quot; alt=&quot;Picture showing the word &amp;#x27;DOOT&amp;#x27; printed on the Pico clone&quot; title=&quot;Picture showing the word &amp;#x27;DOOT&amp;#x27; printed on the Pico clone (Click to open in new tab)&quot; width=&quot;400&quot; height=&quot;224&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;...lovingly mislabeled as DOOT on my clone&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;Then, I had to learn how to use AT commands. AT commands (short for &lt;em&gt;Attention commands&lt;&#x2F;em&gt;) are simple text-based instructions used by modems and certain modules (such as WiFi or Bluetooth chips) to communicate over a serial connection. Learning to use them wasn’t too difficult, as &lt;a href=&quot;https:&#x2F;&#x2F;docs.espressif.com&#x2F;projects&#x2F;esp-at&#x2F;en&#x2F;latest&#x2F;esp32&#x2F;AT_Command_Set&#x2F;index.html&quot;&gt;Espressif has it all documented on their website&lt;&#x2F;a&gt;. However, what &lt;em&gt;was&lt;&#x2F;em&gt; difficult was finding out that, for some reason, I couldn’t get https communication working! After flashing the firmware maybe 6 times with different configurations, I decided it wasn’t worth the trouble and opted to use exclusively TCP packets to send the data.&lt;&#x2F;p&gt;
+&lt;p&gt;The data in question would be temperature and humidity readings from an AHT20 module, also purchased from AliExpress for around $1.50 AUD. &lt;a href=&quot;https:&#x2F;&#x2F;www.aliexpress.com&#x2F;item&#x2F;1005007394116053.html&quot;&gt;The specific module I bought&lt;&#x2F;a&gt; had both an &lt;a href=&quot;https:&#x2F;&#x2F;cdn.sparkfun.com&#x2F;assets&#x2F;d&#x2F;2&#x2F;b&#x2F;e&#x2F;d&#x2F;AHT20.pdf&quot;&gt;AHT20&lt;&#x2F;a&gt; (temperature + humidity) and a &lt;a href=&quot;https:&#x2F;&#x2F;www.bosch-sensortec.com&#x2F;media&#x2F;boschsensortec&#x2F;downloads&#x2F;datasheets&#x2F;bst-bmp280-ds001.pdf&quot;&gt;BMP280&lt;&#x2F;a&gt; (pressure) sensor on it, as both of these sensors communicate over I&lt;sup&gt;2&lt;&#x2F;sup&gt;C and thus were connected over the same I&lt;sup&gt;2&lt;&#x2F;sup&gt;C lines.&lt;&#x2F;p&gt;
+&lt;p&gt;I later found that the BMP280 was too unreliable and kept failing to communicate after a while, so I stopped using it. The project is designed to be flexible, and so I can always add more sensors if I decide to later on.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-05-20-modules-1.jpg&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+        
+    
+    
+        
+        &lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-05-20-modules-1.29a86e53379f04fc.webp&quot; alt=&quot;Picture showing the environment sensors and small OLED screen&quot; title=&quot;Picture showing the environment sensors and small OLED screen (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;351&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;The AHT20&amp;#x2F;BMP280 sensor module and the 128x64 OLED display&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;The Pico is programmed to keep a log of the sensor readings, and then periodically send these readings to my Raspberry Pi 3B+ over TCP. The Pi runs a small server script written in Python, which listens for these TCP packets and saves the readings into a database. And as the Pico is barely breaking a sweat running its code, I am able to connect an &lt;a href=&quot;https:&#x2F;&#x2F;www.aliexpress.com&#x2F;item&#x2F;1005007895120525.html?pdp_ext_f=%7B%22sku_id%22:%2212000042749372460%22%7D&quot;&gt;I&lt;sup&gt;2&lt;&#x2F;sup&gt;C 128x64 OLED Display module&lt;&#x2F;a&gt; to it too, for displaying the readings and such.&lt;&#x2F;p&gt;
+&lt;p&gt;Now multiply this setup by five, and you have an entire network of small (and cheap!) WiFi-connected nodes sending environmental readings to a server.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-05-20-pi-1.jpg&quot;&gt;
+
+
+    
+
+
+    
+        
+    
+    
+    
+    
+    
+        
+        
+    
+    
+        
+        &lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-05-20-pi-1.e689ef12e1dca2de.webp&quot; alt=&quot;Picture showing my Raspberry Pi in its case sitting on my shelf&quot; title=&quot;Picture showing my Raspberry Pi in its case sitting on my shelf (Click to open in new tab)&quot; width=&quot;400&quot; height=&quot;334&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;My Raspberry Pi in its case sitting on my shelf&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Of course, there are a number of downsides to running the project this way. One big issue is that these clone Pico “W” boards aren’t nearly as well-documented as the official ones using the Infineon chip; some reverse-engineering is required. Another major problem is that the communication between the Picos and the Pi is &lt;em&gt;completely unsecured&lt;&#x2F;em&gt; and in fact can be &lt;em&gt;very easily hijacked&lt;&#x2F;em&gt;. This is why the Environode network runs only over LAN and should never be exposed to the internet (and even then, there’s a risk of someone on your LAN interfering with the network.)&lt;&#x2F;p&gt;
+&lt;p&gt;However, for a cheap and easy project, it works great. I got to learn many things while making this project, and these skills will carry on into my other projects too. I plan on integrating some of my other Pico-based projects into the Environode network too, notably my Heximal Clock (which I plan to talk about in a later blog post! 👀).&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;The code for the Environode network will likely be released as Open Source, and if it does I’ll include information on how to get it running on your own. However, in its current state it is not ready for release (I’m still just working on breadboards!) and so I won’t be releasing the source code alongside this blog post. Sorry about that! You can, however, subscribe to the &lt;a href=&quot;&#x2F;rss.xml&quot;&gt;rss&lt;&#x2F;a&gt; or &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;atom&lt;&#x2F;a&gt; feed to be updated on my future blog posts.&lt;&#x2F;p&gt;
+&lt;p&gt;-skm&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;All images in this post were taken by me.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

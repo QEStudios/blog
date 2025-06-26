@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>SKM GEEK&#x27;s Blog - announcement</title>
+      <link>https://blog.skmgeek.com/</link>
+      <description>Hello! Welcome to my place for putting Things. I share my projects, thoughts, and anything else I feel like here.</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://blog.skmgeek.com/tags/announcement/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Thu, 15 May 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Welcome to the Blog</title>
+          <pubDate>Thu, 15 May 2025 00:00:00 +0000</pubDate>
+          <author>SKM GEEK</author>
+          <link>https://blog.skmgeek.com/2025-05-15-welcome-to-the-blog/</link>
+          <guid>https://blog.skmgeek.com/2025-05-15-welcome-to-the-blog/</guid>
+          <description xml:base="https://blog.skmgeek.com/2025-05-15-welcome-to-the-blog/">&lt;h1 id=&quot;hello-welcome-to-my-new-place-for-putting-things&quot;&gt;Hello! Welcome to my new place for putting Things.&lt;&#x2F;h1&gt;
+&lt;p&gt;This blog is where I will share my projects, thoughts, and anything else I feel like.&lt;&#x2F;p&gt;
+&lt;p&gt;There isn’t going to be a set schedule or anything, I’ll just post whenever I feel like it. My hope is that this blog will get me to finish projects that I otherwise would have left unfinished, and will serve as an archive showing all the things I’ve done. I might write posts about the projects I’ve already started, or I might not. It depends on what feels worth sharing. I’m quite new to the prospect of writing about everything I do, so it will certainly take a bit of learning. Perhaps this blog will encourage me to do new things just so I can write about them. Time will tell!&lt;&#x2F;p&gt;
+&lt;p&gt;There is both an &lt;a href=&quot;&#x2F;rss.xml&quot;&gt;rss&lt;&#x2F;a&gt; and an &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;atom&lt;&#x2F;a&gt; feed available for you to subscribe to, and it would certainly mean a lot to me if you did! Knowing that people are interested in the things I do pushes me to continue doing them.&lt;&#x2F;p&gt;
+&lt;p&gt;I’ll leave this post at that. I may talk about some more blog-related things in the near future, but I think that about sums it up for now.&lt;&#x2F;p&gt;
+&lt;p&gt;Here’s a picture of my cat Misty to fill the space (she says hello):
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-05-15-misty.jpg&quot;&gt;
+
+
+    
+
+
+    
+        
+    
+    
+    
+    
+    
+        
+        
+    
+    
+        
+        &lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-05-15-misty.7f756b323aaee443.webp&quot; alt=&quot;A picture of my cat, Misty.&quot; title=&quot;A picture of my cat, Misty. (Click to open in new tab)&quot; width=&quot;301&quot; height=&quot;400&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;-skm&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>
