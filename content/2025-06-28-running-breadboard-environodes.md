@@ -6,6 +6,10 @@ draft: true
 taxonomies:
   tags:
     - environode
-    - 
-    - announcement
+    - electronics
+    - iot
+    - raspberry pi pico
+    - raspberry pi
+    - radxa rock
+    - grafana
 ---
