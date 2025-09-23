@@ -2,7 +2,6 @@
 title: "Environode Network Pt. 2: Breadboards, Grafana, and ROCKs"
 description: Updates on my current Environode network setup, featuring my new ROCK 4C+.
 date: 2025-09-23
-draft: true
 taxonomies:
   tags:
     - environode
