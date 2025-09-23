@@ -62,7 +62,7 @@ And thanks to the flexibility of Grafana, I can easily add more visualisations o
 
 ---
 
-Running Environodes on breadboards is fine, but having dedicated PCBs is even better. I started work on custom PCBs for the Environodes a little while ago, and I'm currently waiting on the first boards to arrive now. I won't release any of the schematics or PCB designs just yet, as there may be errors that I want to iron out before sharing them. Once it's all ready, I plan to release the design files under CC BY 4.0 and the code under MIT.
+Running Environodes on breadboards is fine, but having dedicated PCBs is even better. I started work on custom PCBs for the Environodes a little while ago, and I'm currently waiting on the first boards to arrive now. I won't release any of the schematics or PCB designs just yet, as there may be errors that I want to iron out before sharing them. Once it's all ready, I plan to release the design files under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) and the code under [MIT](https://opensource.org/license/mit/).
 
 I have plenty more planned for this project, so if you want to stay up to date you can subscribe to my blog's [rss](/rss.xml) or [atom](/atom.xml) feeds.
 
