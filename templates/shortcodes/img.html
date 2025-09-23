@@ -20,7 +20,10 @@
     {% if (r >= mdata.width) and (r >= mdata.height) %}
         {% set url = image_path %}
     {% else %}
-        {% set image = resize_image(path=image_path, width=r, height=r, op="fit", format="webp", quality=60) %}
+        {% if not quality %}
+            {% set quality = 60 %}
+        {% endif %}
+        {% set image = resize_image(path=image_path, width=r, height=r, op="fit", format="webp", quality=quality) %}
         {% set url = image.url %}
     {% endif %}
     {% if mdata.width >= mdata.height %}
