@@ -21,12 +21,19 @@ config.title %}
     <span>
       (<a href="{{ page.permalink | safe }}">Permalink</a>)
     </span>
+    {% if page.updated -%}
+    <br>
+    <span>Last updated on&nbsp;</span><time datetime="{{ page.updated }}">{{ page.updated |
+      date(format=config.extra.timeformat |
+      default(value="%B
+      %e, %Y"))}}</time>
+    {%- endif %}
   </section>
   <section class="tags">
     <section class="tags-clouds">
       {% for tag in page.taxonomies.tags %}
-        {% set tag_url = get_taxonomy_url(kind="tags", name=tag) %}
-        <a href="{{ tag_url }}">#{{tag}}</a>
+      {% set tag_url = get_taxonomy_url(kind="tags", name=tag) %}
+      <a href="{{ tag_url }}">#{{tag}}</a>
       {% endfor %}
     </section>
   </section>
