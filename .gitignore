@@ -1,6 +1,7 @@
-public
+/public
 zola.exe
 no-commit
 .obsidian
-processed_images
+/static/processed_images
 /static/files
+/publish
