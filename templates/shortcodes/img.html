@@ -48,7 +48,7 @@
     {% endif %}
 {% endif %}
 
-{% if process == true %}
+{% if process == "true" %}
     {% if use_cdn %}
         {% set url = "https://files.skmgeek.com/blog/processed/" ~ src %}
     {% else %}
