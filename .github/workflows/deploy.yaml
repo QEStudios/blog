@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write  # Needed to push to another branch
+  contents: write # Needed to push to another branch
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
           tool: zola@0.20.0
 
       - name: Build site
-        run: zola build
+        run: USE_CDN=true zola build
 
       - name: Push `public/` to `deploy` branch
         uses: peaceiris/actions-gh-pages@v3
@@ -29,4 +29,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: deploy
-          force_orphan: true  # Optional: creates a clean history for the branch
+          force_orphan: true # Optional: creates a clean history for the branch

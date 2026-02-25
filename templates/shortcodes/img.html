@@ -1,24 +1,56 @@
-{% set image_path = "/files/" ~ src %}
+{% if not process %}
+    {% set process = "true" %}
+{% endif %}
+
+{% if get_env(name="USE_CDN", default="false") == "true" %}
+    {% set use_cdn = true%}
+{% else %}
+    {% set use_cdn = false%}
+{% endif %}
+
+{% if use_cdn %}
+    {% set image_path = "https://files.skmgeek.com/blog/" ~ src %}
+{% else %}
+    {% set image_path = "/files/" ~ src %}
+    {% set mdata = get_image_metadata(path=image_path)%}
+{% endif %}
 <div class="img-container"><a class="image-click" href="{{image_path}}">
-{% set mdata = get_image_metadata(path=image_path)%}
 {% if title %}
     {% set full_title = title ~ " (Click to open in new tab)" %}
 {% else %}
     {% set full_title = alt ~ " (Click to open in new tab)" %}
 {% endif %}
-{% if size %}
-    {% if size == "small" %}
-        {% set s = 400 %}
+{% if size_landscape %}
+    {% if size_portrait %}
+        {{ throw(message='Image "' ~ src ~ '" has both size_landscape and size_portrait specified. Please only specify one.') }}
     {% endif %}
-    {% if size == "medium" %}
-        {% set s = 650 %}
-    {% endif %}
-    {% if size == "large" %}
-        {% set s = 900 %}
-    {% endif %}
+
+    {% set size = size_landscape %}
+{% elif size_portrait %}
+    {% set size = size_portrait %}
+{% else %}
+    {{ throw(message='Image "' ~ src ~ '" must have a size_portrait or size_landscape specified.') }}
+{% endif %}
+{% if size == "small" %}
+    {% set s = 400 %}
+{% endif %}
+{% if size == "medium" %}
+    {% set s = 650 %}
+{% endif %}
+{% if size == "large" %}
+    {% set s = 900 %}
+{% endif %}
+
+{% if not use_cdn %}
     {% set r = s * 2 %}
-    {% if (r >= mdata.width) and (r >= mdata.height) %}
-        {% set url = image_path %}
+    {% if (r >= mdata.width) and (r >= mdata.height) and (process == "true") %}
+        {{ throw(message='Image "' ~ src ~ '" is too small to compress/process for requested size "' ~ size ~ '". Mark it as process="false".') }}
+    {% endif %}
+{% endif %}
+
+{% if process == true %}
+    {% if use_cdn %}
+        {% set url = "https://files.skmgeek.com/blog/processed/" ~ src %}
     {% else %}
         {% if not quality %}
             {% set quality = 60 %}
@@ -26,15 +58,14 @@
         {% set image = resize_image(path=image_path, width=r, height=r, op="fit", format="webp", quality=quality) %}
         {% set url = image.url %}
     {% endif %}
-    {% if mdata.width >= mdata.height %}
-        {% set h = s * (mdata.height / mdata.width) | int%}
-        <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" />
-    {% else %}
-        {% set w = s * (mdata.width / mdata.height) | int%}
-        <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" />
-    {% endif %}
 {% else %}
-    <img src="{{image_path}}" alt="{{alt}}" title="{{full_title}}" width="{{mdata.width}}" height="{{mdata.height}}" />
+    {% set url = image_path %}
+{% endif %}
+
+{% if size_landscape %}
+    <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" />
+{% else %}
+    <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" height="{{s}}" />
 {% endif %}
 {% if caption %}
     <br /><em>{{caption}}</em>

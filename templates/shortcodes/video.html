@@ -1,4 +1,9 @@
-{% set video_path = "/files/" ~ src %}
+{% if get_env(name="USE_CDN", default="false") == "true" %}
+    {% set video_path = "https://files.skmgeek.com/blog/" ~ src %}
+{% else %}
+    {% set video_path = "/files/" ~ src %}
+{% endif %}
+
 <div class="video-container">
 {% if title %}
     {% set full_title = title ~ " (Click to open in new tab)" %}
