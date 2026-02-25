@@ -3,3 +3,4 @@ zola.exe
 no-commit
 .obsidian
 processed_images
+/static/files
