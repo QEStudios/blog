@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
-  {% set t = "Tags | " ~ config.title %}
-  {% include "partials/head.html" %}
+{% set t = "Tags | " ~ config.title %}
+{% include "partials/head.html" %}
 {% endblock %}
 
 {% block content %}
@@ -34,7 +34,7 @@
         <section class="tags-post-line"></section>
       </section>
       <span class="tags-post-meta">
-        <time datetime="{{ page.date }}">
+        <time datetime="{{ page.date }}" class="date-only">
           {{ page.date | date(format=config.extra.timeformat | default(value="%B
           %e, %Y")) }}
         </time>

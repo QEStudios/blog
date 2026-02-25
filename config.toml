@@ -20,7 +20,7 @@ smart_punctuation = true
 author = "SKM GEEK"
 email = "qestudios17@gmail.com"
 github = "https://github.com/QEStudios"
-timeformat = "%Y-%m-%d"                 # e.g. June 14, 2021
+timeformat = "%Y-%m-%d"                 # e.g. 2021-06-14
 
 [[extra.menu]]
 name = "Archive"

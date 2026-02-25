@@ -1,7 +1,7 @@
 ---
 title: Environode Network Introduction
 description: This blog post discusses my ongoing Environode project. Since it's still a work in progress, some things may change, as nothing is fully set in stone.
-date: 2025-05-20
+date: 2025-05-20T01:45:00+10:00
 taxonomies:
   tags:
     - environode
