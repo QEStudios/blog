@@ -11,22 +11,30 @@ config.title %}
   <h1 class="post-title">{{ page.title }}</h1>
   <section class="post-info">
     {% if page.extra.author -%}
-    <span>Written by</span> {{ page.extra.author }}
+    <span>Written by</span> {{ page.extra.author }} <span>on&nbsp;</span>
     {% elif config.extra.author -%}
-    <span>Written by</span> {{ config.extra.author }}
+    <span>Written on&nbsp;</span>
     {%- endif %}
-    <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date(format=config.extra.timeformat |
+    <time datetime="{{ page.date }}" class="date-only">{{ page.date |
+      date(format=config.extra.timeformat |
       default(value="%B
       %e, %Y"))}}</time>
+    <span>, at&nbsp;</span>
+    <time datetime="{{ page.date }}" class="time-only">{{ page.date |
+      date(format="%H:%M")}}</time>
     <span>
       (<a href="{{ page.permalink | safe }}">Permalink</a>)
     </span>
     {% if page.updated -%}
     <br>
-    <span>Last updated on&nbsp;</span><time datetime="{{ page.updated }}">{{ page.updated |
+    <span>Last updated on&nbsp;</span>
+    <time datetime="{{ page.updated }}" class="date-only">{{ page.updated |
       date(format=config.extra.timeformat |
       default(value="%B
       %e, %Y"))}}</time>
+    <span>, at&nbsp;</span>
+    <time datetime="{{ page.updated }}" class="time-only">{{ page.updated |
+      date(format="%H:%M")}}</time>
     {%- endif %}
   </section>
   <section class="tags">

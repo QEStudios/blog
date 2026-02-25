@@ -2,11 +2,12 @@
 <div class="catalogue-item">
   <a class="catalogue-link" href="{{ page.permalink | safe }}">
     <section>
-      <time datetime="{{ page.date }}" class="catalogue-time">{{ page.date | date(format=config.extra.timeformat |
+      <time datetime="{{ page.date }}" class="catalogue-time date-only">{{ page.date |
+        date(format=config.extra.timeformat |
         default(value="%B
         %e, %Y")) }}</time>
       {% if page.updated %}
-      (Last updated <time datetime="{{ page.updated }}" class="catalogue-time">{{ page.updated |
+      (Updated <time datetime="{{ page.updated }}" class="catalogue-time date-only">{{ page.updated |
         date(format=config.extra.timeformat |
         default(value="%B
         %e, %Y")) }}</time>)

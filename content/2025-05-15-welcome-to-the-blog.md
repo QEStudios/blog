@@ -1,7 +1,7 @@
 ---
 title: Welcome to the Blog
 description: Hello! Welcome to my new place for putting Things. This blog is where I will share my projects, thoughts, and anything else I feel like.
-date: 2025-05-15
+date: 2025-05-15T15:59:00+10:00
 taxonomies:
   tags:
     - miscellaneous
