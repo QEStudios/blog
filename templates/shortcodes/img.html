@@ -50,11 +50,25 @@
 
 {% if process == "true" %}
     {% if use_cdn %}
-        {% set url = "https://files.skmgeek.com/blog/processed/" ~ src %}
-    {% else %}
-        {% if not quality %}
-            {% set quality = 60 %}
+        {% set mapping = load_data(path="data/cdn_processed.json", required=false) %}
+
+        {% set key_full = src %}
+        {% set key_base = src | split(pat="/") | last %}
+
+        {% if mapping and (key_full in mapping) %}
+            {% set processed_rel = mapping[key_full] %}
+            {% set url = "https://files.skmgeek.com/blog/" ~ processed_rel %}
+
+        {% elif mapping and (key_base in mapping) %}
+            {% set processed_rel = mapping[key_base] %}
+            {% set url = "https://files.skmgeek.com/blog/" ~ processed_rel %}
+
+        {% else %}
+            {{ throw(message="No CDN processed mapping for '" ~ src ~ "'. Update data/cdn_processed.json before building in CDN mode.") }}
         {% endif %}
+
+    {% else %}
+        {% if not quality %} {% set quality = 60 %} {% endif %}
         {% set image = resize_image(path=image_path, width=r, height=r, op="fit", format="webp", quality=quality) %}
         {% set url = image.url %}
     {% endif %}
