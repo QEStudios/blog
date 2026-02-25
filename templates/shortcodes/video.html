@@ -1,0 +1,27 @@
+{% set video_path = "/files/" ~ src %}
+<div class="video-container">
+{% if title %}
+    {% set full_title = title ~ " (Click to open in new tab)" %}
+{% else %}
+    {% set full_title = alt ~ " (Click to open in new tab)" %}
+{% endif %}
+{% set s = 650 %}
+{% if size %}
+    {% if size == "small" %}
+        {% set s = 400 %}
+    {% endif %}
+    {% if size == "medium" %}
+        {% set s = 650 %}
+    {% endif %}
+    {% if size == "large" %}
+        {% set s = 900 %}
+    {% endif %}
+{% endif %}
+<video controls playsinline loop alt="{{alt}}" title="{{full_title}}" width="{{s}}">
+    <source src="{{video_path}}" type="{{type}}">
+    <p>Your browser doesn't support this video format. You can <a href="{{video_path}}">download the video here</a>.</p>
+</video>
+{% if caption %}
+    <br /><em>{{caption}}</em>
+{% endif %}
+</div>
