@@ -23,7 +23,7 @@ Intrigued, I purchased one. Now, there's always a risk when buying online, and t
 
 Naturally, instead of following the advice, I decided to use this clone Pico W to design my own locally hosted environmental sensor network, and this is the topic of this blog post!
 
-{{ img(src="2025-05-20-pico-1.jpg", alt="Picture showing the clone Raspberry Pi Pico W", caption="The clone Raspberry Pi Pico W", size_landscape="medium") }}
+{{ img(src="2025-05-20-pico-1.jpg", alt="Picture showing the clone Raspberry Pi Pico W", caption="The clone Raspberry Pi Pico W", size="medium") }}
 
 ---
 
@@ -31,7 +31,7 @@ The clone Raspberry Pi Pico "W" is configured to use AT commands over UART to co
 
 *([I've reuploaded the files to my own MEGA account to preserve them, you can download them here.](https://mega.nz/folder/VqMg2YQC#seTJR8HW_Eu3lB-ttfzXyQ))*
 
-{{ img(src="2025-05-20-doot-1.jpg", alt="Picture showing the word 'DOOT' printed on the Pico clone", caption="...lovingly mislabeled as DOOT on my clone", size_landscape="small") }}
+{{ img(src="2025-05-20-doot-1.jpg", alt="Picture showing the word 'DOOT' printed on the Pico clone", caption="...lovingly mislabeled as DOOT on my clone", size="small") }}
 
 Then, I had to learn how to use AT commands. AT commands (short for *Attention commands*) are simple text-based instructions used by modems and certain modules (such as WiFi or Bluetooth chips) to communicate over a serial connection. Learning to use them wasn't too difficult, as [Espressif has it all documented on their website](https://docs.espressif.com/projects/esp-at/en/latest/esp32/AT_Command_Set/index.html). However, what *was* difficult was finding out that, for some reason, I couldn't get https communication working! After flashing the firmware maybe 6 times with different configurations, I decided it wasn't worth the trouble and opted to use exclusively TCP packets to send the data.
 
@@ -39,13 +39,13 @@ The data in question would be temperature and humidity readings from an AHT20 mo
 
 I later found that the BMP280 was too unreliable and kept failing to communicate after a while, so I stopped using it. The project is designed to be flexible, and so I can always add more sensors if I decide to later on.
 
-{{ img(src="2025-05-20-modules-1.jpg", alt="Picture showing the environment sensors and small OLED screen", caption="The AHT20/BMP280 sensor module and the 128x64 OLED display", size_landscape="medium") }}
+{{ img(src="2025-05-20-modules-1.jpg", alt="Picture showing the environment sensors and small OLED screen", caption="The AHT20/BMP280 sensor module and the 128x64 OLED display", size="medium") }}
 
 The Pico is programmed to keep a log of the sensor readings, and then periodically send these readings to my Raspberry Pi 3B+ over TCP. The Pi runs a small server script written in Python, which listens for these TCP packets and saves the readings into a database. And as the Pico is barely breaking a sweat running its code, I am able to connect an [I<sup>2</sup>C 128x64 OLED Display module](https://www.aliexpress.com/item/1005007895120525.html?pdp_ext_f=%7B"sku_id":"12000042749372460"%7D) to it too, for displaying the readings and such.
 
 Now multiply this setup by five, and you have an entire network of small (and cheap!) WiFi-connected nodes sending environmental readings to a server.
 
-{{ img(src="2025-05-20-pi-1.jpg", alt="Picture showing my Raspberry Pi in its case sitting on my shelf", caption="My Raspberry Pi in its case sitting on my shelf", size_landscape="small") }}
+{{ img(src="2025-05-20-pi-1.jpg", alt="Picture showing my Raspberry Pi in its case sitting on my shelf", caption="My Raspberry Pi in its case sitting on my shelf", size="small") }}
 
 ---
 

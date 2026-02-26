@@ -8,28 +8,52 @@
     {% set use_cdn = false%}
 {% endif %}
 
+{% set filedata_file = "data/filedata.json"%}
+
 {% if use_cdn %}
     {% set image_path = "https://files.skmgeek.com/blog/" ~ src %}
+    {% set filedata = load_data(path=filedata_file, required=false) %}
+
+    {% if filedata and (src in filedata) %}
+        {% set data = filedata[src] %}
+        {% if "sample" in data %}
+            {% set sample_file = data["sample"] %}
+            {% set url = "https://files.skmgeek.com/blog/" ~ sample_file %}
+            {% set sample = true %}
+        {% else %}
+            {% set url = image_path %}
+        {% endif %}
+
+        {% if "width" in data %}
+            {% set width = data["width"] %}
+        {% else %}
+            {{ throw(message="No width value present for '" ~ src ~ "' in " ~ filedata_file ~ ".") }}
+        {% endif %}
+
+        {% if "height" in data %}
+            {% set height = data["height"] %}
+        {% else %}
+            {{ throw(message="No height value present for '" ~ src ~ "' in " ~ filedata_file ~ ".") }}
+        {% endif %}
+    {% else %}
+        {{ throw(message="No metadata present for '" ~ src ~ "'. Update " ~ filedata_file ~ " before building in CDN mode.") }}
+    {% endif %}
+
 {% else %}
     {% set image_path = "/files/" ~ src %}
     {% set mdata = get_image_metadata(path=image_path)%}
+    {% set width = mdata.width %}
+    {% set height = mdata.height %}
 {% endif %}
+
 <div class="img-container"><a class="image-click" href="{{image_path}}">
 {% if title %}
     {% set full_title = title ~ " (Click to open in new tab)" %}
 {% else %}
     {% set full_title = alt ~ " (Click to open in new tab)" %}
 {% endif %}
-{% if size_landscape %}
-    {% if size_portrait %}
-        {{ throw(message='Image "' ~ src ~ '" has both size_landscape and size_portrait specified. Please only specify one.') }}
-    {% endif %}
-
-    {% set size = size_landscape %}
-{% elif size_portrait %}
-    {% set size = size_portrait %}
-{% else %}
-    {{ throw(message='Image "' ~ src ~ '" must have a size_portrait or size_landscape specified.') }}
+{% if not size %}
+    {{ throw(message='Image "' ~ src ~ '" must have a size specified.') }}
 {% endif %}
 {% if size == "small" %}
     {% set s = 400 %}
@@ -40,46 +64,29 @@
 {% if size == "large" %}
     {% set s = 900 %}
 {% endif %}
-
-{% if not use_cdn %}
-    {% set r = s * 2 %}
-    {% if (r >= mdata.width) and (r >= mdata.height) and (sample == "true") %}
-        {{ throw(message='Image "' ~ src ~ '" is too small to generate sample for requested size "' ~ size ~ '". Mark it as sample="false".') }}
-    {% endif %}
+{% if not s %}
+    {{ throw(message='Image "' ~ src ~ '" has invalid size value "' ~ size ~ '".') }}
 {% endif %}
 
-{% if sample == "true" %}
-    {% if use_cdn %}
-        {% set filedata = load_data(path="data/filedata.json", required=false) %}
+{% set r = s * 2 %}
 
-        {% set key_full = src %}
-        {% set key_base = src | split(pat="/") | last %}
-
-        {% if filedata and (key_full in filedata) %}
-            {% set sample_file = filedata[key_full] %}
-            {% set url = "https://files.skmgeek.com/blog/" ~ sample_file %}
-
-        {% elif filedata and (key_base in filedata) %}
-            {% set sample_file = filedata[key_base] %}
-            {% set url = "https://files.skmgeek.com/blog/" ~ sample_file %}
-
-        {% else %}
-            {{ throw(message="No CDN filedata for '" ~ src ~ "'. Update data/filedata.json before building in CDN mode.") }}
-        {% endif %}
-
+{% if not use_cdn %}
+    {% if (r >= width) and (r >= height) %}
+        {% set url = image_path %}
     {% else %}
         {% if not quality %} {% set quality = 60 %} {% endif %}
         {% set image = resize_image(path=image_path, width=r, height=r, op="fit", format="webp", quality=quality) %}
         {% set url = image.url %}
+        {% set sample = true %}
     {% endif %}
-{% else %}
-    {% set url = image_path %}
 {% endif %}
 
-{% if size_landscape %}
-    <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" />
+{% if width >= height %}
+    {% set h = s * (height / width) | int %}
+    <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" />
 {% else %}
-    <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" height="{{s}}" />
+    {% set w = s * (width / height) | int %}
+    <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" />
 {% endif %}
 {% if caption %}
     <br /><em>{{caption}}</em>

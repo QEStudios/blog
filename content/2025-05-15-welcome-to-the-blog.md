@@ -18,6 +18,6 @@ There is both an [rss](/rss.xml) and an [atom](/atom.xml) feed available for you
 I'll leave this post at that. I may talk about some more blog-related things in the near future, but I think that about sums it up for now.
 
 Here's a picture of my cat Misty to fill the space (she says hello):
-{{ img(src="2025-05-15-misty.jpg", alt="A picture of my cat, Misty.", size_portrait="small") }}
+{{ img(src="2025-05-15-misty.jpg", alt="A picture of my cat, Misty.", size="small") }}
 
 -skm
