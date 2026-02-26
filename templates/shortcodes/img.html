@@ -1,5 +1,5 @@
-{% if not process %}
-    {% set process = "true" %}
+{% if not sample %}
+    {% set sample = "true" %}
 {% endif %}
 
 {% if get_env(name="USE_CDN", default="false") == "true" %}
@@ -43,12 +43,12 @@
 
 {% if not use_cdn %}
     {% set r = s * 2 %}
-    {% if (r >= mdata.width) and (r >= mdata.height) and (process == "true") %}
-        {{ throw(message='Image "' ~ src ~ '" is too small to compress/process for requested size "' ~ size ~ '". Mark it as process="false".') }}
+    {% if (r >= mdata.width) and (r >= mdata.height) and (sample == "true") %}
+        {{ throw(message='Image "' ~ src ~ '" is too small to generate sample for requested size "' ~ size ~ '". Mark it as sample="false".') }}
     {% endif %}
 {% endif %}
 
-{% if process == "true" %}
+{% if sample == "true" %}
     {% if use_cdn %}
         {% set filedata = load_data(path="data/filedata.json", required=false) %}
 
@@ -56,12 +56,12 @@
         {% set key_base = src | split(pat="/") | last %}
 
         {% if filedata and (key_full in filedata) %}
-            {% set processed_rel = filedata[key_full] %}
-            {% set url = "https://files.skmgeek.com/blog/" ~ processed_rel %}
+            {% set sample_file = filedata[key_full] %}
+            {% set url = "https://files.skmgeek.com/blog/" ~ sample_file %}
 
         {% elif filedata and (key_base in filedata) %}
-            {% set processed_rel = filedata[key_base] %}
-            {% set url = "https://files.skmgeek.com/blog/" ~ processed_rel %}
+            {% set sample_file = filedata[key_base] %}
+            {% set url = "https://files.skmgeek.com/blog/" ~ sample_file %}
 
         {% else %}
             {{ throw(message="No CDN filedata for '" ~ src ~ "'. Update data/filedata.json before building in CDN mode.") }}

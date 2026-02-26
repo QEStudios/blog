@@ -56,7 +56,7 @@ For visualising the data coming in from the Environodes, I opted to use [Grafana
 
 After a little configuration, my Grafana dashboard looks like this:
 
-{{ img(src="2025-09-23-grafana-1.webp", alt="Grafana dashboard showing data from the past 7 days", caption="Grafana dashboard showing 7 days of historical data", size_landscape="large", quality=100, process="false") }}
+{{ img(src="2025-09-23-grafana-1.webp", alt="Grafana dashboard showing data from the past 7 days", caption="Grafana dashboard showing 7 days of historical data", size_landscape="large", quality=100, sample="false") }}
 
 And thanks to the flexibility of Grafana, I can easily add more visualisations or data points without much hassle.
 
