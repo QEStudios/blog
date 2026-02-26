@@ -50,21 +50,21 @@
 
 {% if process == "true" %}
     {% if use_cdn %}
-        {% set mapping = load_data(path="data/cdn_processed.json", required=false) %}
+        {% set filedata = load_data(path="data/filedata.json", required=false) %}
 
         {% set key_full = src %}
         {% set key_base = src | split(pat="/") | last %}
 
-        {% if mapping and (key_full in mapping) %}
-            {% set processed_rel = mapping[key_full] %}
+        {% if filedata and (key_full in filedata) %}
+            {% set processed_rel = filedata[key_full] %}
             {% set url = "https://files.skmgeek.com/blog/" ~ processed_rel %}
 
-        {% elif mapping and (key_base in mapping) %}
-            {% set processed_rel = mapping[key_base] %}
+        {% elif filedata and (key_base in filedata) %}
+            {% set processed_rel = filedata[key_base] %}
             {% set url = "https://files.skmgeek.com/blog/" ~ processed_rel %}
 
         {% else %}
-            {{ throw(message="No CDN processed mapping for '" ~ src ~ "'. Update data/cdn_processed.json before building in CDN mode.") }}
+            {{ throw(message="No CDN filedata for '" ~ src ~ "'. Update data/filedata.json before building in CDN mode.") }}
         {% endif %}
 
     {% else %}
