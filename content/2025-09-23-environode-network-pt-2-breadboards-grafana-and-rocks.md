@@ -33,7 +33,7 @@ I initially built the Environodes on breadboards as a proof-of-concept, and I wa
 
 {{ img(src="2025-09-23-pico-schematic-breadboard-1.webp", alt="Schematic drawing for the original breadboard version of the Raspberry Pi Pico Environode", caption="Original schematic for the breadboarded Raspberry Pi Pico Environode", size="medium") }}
 
-*[Download this schematic here (97.71 KB)](/files/2025-09-23-pico-schematic-breadboard-1.kicad_sch)&nbsp;&nbsp;&nbsp;[(Mirror)](https://mega.nz/file/N68lwQxY#_WO86jBCGoBulecV6tE1MAH59I2Yc3qlqqoCdPWa0pY)*
+{{ file_with_mirror(text="Download this schematic here (97.71 KB)", path="2025-09-23-pico-schematic-breadboard-1.kicad_sch", mirror="https://mega.nz/file/N68lwQxY#_WO86jBCGoBulecV6tE1MAH59I2Yc3qlqqoCdPWa0pY") }}
 
 This schematic is a 1:1 diagram of how *I* prototyped the Environodes. However, this original design has some flaws:
 - I<sup>2</sup>C modules are powered with 5V while the data lines are driven at 3.3V, which might cause the Pico to misbehave or get damaged if the data lines are pulled to 5V.
@@ -44,7 +44,7 @@ As such, I would recommend using this adjusted schematic if you plan on building
 
 {{ img(src="2025-09-23-pico-schematic-breadboard-adjusted-1.webp", alt="Schematic drawing for the adjusted breadboard version of the Raspberry Pi Pico Environode", caption="Adjusted schematic for the breadboarded Raspberry Pi Pico Environode", size="medium") }}
 
-*[Download this schematic here (116.82 KB)](/files/2025-09-23-pico-schematic-breadboard-adjusted-1.kicad_sch)&nbsp;&nbsp;&nbsp;[(Mirror)](https://mega.nz/file/171B1LRR#8RMsxCGgbbrFwqAU_ElscEDCsH1nw7QTBsazQOunJnI)*
+{{ file_with_mirror(text="Download this schematic here (116.82 KB)", path="2025-09-23-pico-schematic-breadboard-adjusted-1.kicad_sch", mirror="https://mega.nz/file/171B1LRR#8RMsxCGgbbrFwqAU_ElscEDCsH1nw7QTBsazQOunJnI") }}
 
 ---
 
