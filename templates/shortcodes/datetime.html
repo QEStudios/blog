@@ -1,0 +1,5 @@
+<time datetime="{{ dt }}" class="date-time">{{ dt |
+    date(format=config.extra.timeformat |
+    default(value="%B
+    %e, %Y"))}} {{ dt |
+    date(format="%H:%M")}}</time>

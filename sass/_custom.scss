@@ -11,6 +11,7 @@ img {
     text-decoration: none;
 }
 
+.video-container,
 .img-container {
     text-align: center;
     margin: 0 auto 0.5rem;
@@ -18,4 +19,12 @@ img {
     br {
         display: none;
     }
+}
+
+.video-container>video {
+    max-width: 100%;
+}
+
+video {
+    border-radius: 3px;
 }
