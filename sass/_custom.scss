@@ -2,7 +2,8 @@
 
 @use "variables";
 
-img {
+img,
+video {
     border-radius: 3px;
 }
 
@@ -23,8 +24,4 @@ img {
 
 .video-container>video {
     max-width: 100%;
-}
-
-video {
-    border-radius: 3px;
 }

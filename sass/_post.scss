@@ -39,13 +39,15 @@
     text-decoration: underline;
   }
 
-  img {
+  img,
+  video {
     margin: 0 auto 0;
     height: auto;
     object-fit: contain;
   }
 
-  img~em {
+  img~em,
+  video~em {
     color: variables.$default-shade;
     display: block;
     font-family: variables.$sans-serif;
