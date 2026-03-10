@@ -2,7 +2,7 @@
 title: "Environode Network Pt. 2: Breadboards, Grafana, and ROCKs"
 description: Updates on my current Environode network setup, featuring my new ROCK 4C+.
 date: 2025-09-23T22:53:00+10:00
-updated: 2026-02-26T03:30:00+11:00
+updated: 2026-03-11T06:37:00+11:00
 taxonomies:
   tags:
     - environode
@@ -73,4 +73,4 @@ I have plenty more planned for this project, so if you want to stay up to date y
 
 ---
 
-*Update {{ datetime(dt="2026-02-26T03:35:00+11:00") }}: Corrected filesize hints.*
+*Update {{ datetime(dt="2026-03-11T06:37:00+11:00") }}: Corrected filesize hints.*
