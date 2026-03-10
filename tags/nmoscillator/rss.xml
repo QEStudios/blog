@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>SKM GEEK&#x27;s Blog - nmoscillator</title>
+      <link>https://blog.skmgeek.com/</link>
+      <description>Hello! Welcome to my place for putting Things. I share my projects, thoughts, and anything else I feel like here.</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://blog.skmgeek.com/tags/nmoscillator/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Wed, 11 Mar 2026 06:46:00 +1100</lastBuildDate>
+      <item>
+          <title>The NMOScillator: A New Project!</title>
+          <pubDate>Wed, 11 Mar 2026 06:46:00 +1100</pubDate>
+          <author>SKM GEEK</author>
+          <link>https://blog.skmgeek.com/2026-03-11-nmoscillator-a-new-project/</link>
+          <guid>https://blog.skmgeek.com/2026-03-11-nmoscillator-a-new-project/</guid>
+          <description xml:base="https://blog.skmgeek.com/2026-03-11-nmoscillator-a-new-project/">&lt;h1 id=&quot;an-overview-of-my-latest-project-the-nmoscillator&quot;&gt;An overview of my latest project, the NMOScillator.&lt;&#x2F;h1&gt;
+&lt;p&gt;It seems like every time I start to get into the weeds with a project, a new one springs up in its place and occupies my attention.
+This time is no different.&lt;&#x2F;p&gt;
+&lt;p&gt;Over the past few weeks, I’ve been fixating on a brand new project, which I’ve been calling the NMOScillator.
+The basic idea is to drive an &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Texas_Instruments_SN76489&quot;&gt;SN76489 sound chip&lt;&#x2F;a&gt; using rudimentary 74 series logic ICs to produce chiptune music. Hence the name ‘NMOScillator’ - a portmanteau of ‘NMOS’, because the SN76489 uses NMOS technology, and ‘oscillator’.
+It’s a very simple concept, which is why I found it so appealing. I’ve always had an attraction to creating complexity from simplicity, especially in electronic circuits.&lt;&#x2F;p&gt;
+&lt;p&gt;Of course, I wanted to avoid writing a blog post about something that only existed as an idea. I originally ordered the sound chips back in September of last year, and I first wrote down plans for the NMOScillator in November. It’s taken me until now to be ready to share my proof-of-concept.&lt;&#x2F;p&gt;
+&lt;p&gt;The plan was to use a ROM (of sorts) to store song data, and then some logic could read that ROM data, parse out any special instructions it contained, and then pass the rest of the data on through to the SN76489. Thanks to the simple protocol used by the SN76489, piping commands from the ROM would be the easy part. The hard part would be the rest of the parsing logic.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;If you want to learn more about the SN76489, you can find some &lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#useful-links&quot;&gt;useful links&lt;&#x2F;a&gt; at the bottom of this post.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;&#x2F;h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-1-the-rom-format&quot;&gt;Part 1: The ROM format&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-2-the-logic-simulation&quot;&gt;Part 2: The Logic Simulation&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-3-the-compiler&quot;&gt;Part 3: The Compiler&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-4-the-breadboard-circuit&quot;&gt;Part 4: The Breadboard Circuit&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-5-the-test-rig-pcb&quot;&gt;Part 5: The Test Rig PCB&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-6-music-showcase&quot;&gt;Part 6: Music Showcase&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#part-7-next-steps&quot;&gt;Part 7: Next Steps&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.skmgeek.com&#x2F;2026-03-11-nmoscillator-a-new-project&#x2F;#useful-links&quot;&gt;Useful Links&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-1-the-rom-format&quot;&gt;Part 1: The ROM format&lt;&#x2F;h1&gt;
+&lt;p&gt;&lt;em&gt;(If I write something in &lt;strong&gt;bold&lt;&#x2F;strong&gt; in this section, that means it’s a recurring term I came up with to describe the NMOScillator’s behaviour.)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;One of the requirements I set for myself was to make the parsing logic smart enough to fit lengthy songs into the ROM. The most convenient way to do this was to store the songs in &lt;strong&gt;frames&lt;&#x2F;strong&gt;, similar to rows in a tracker. These frames would be played back at a given &lt;strong&gt;Tempo&lt;&#x2F;strong&gt;, which could be specified in the ROM data.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-furnace-rows-1.png&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+        
+    
+    
+    
+    
+    
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-furnace-rows-1.png&quot; alt=&quot;Rows of song data in Furnace tracker&quot; title=&quot;Rows of song data in Furnace tracker (Click to open in new tab)&quot; width=&quot;400&quot; height=&quot;104&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Frames in the ROM data are like rows in music trackers. (Pictured: Furnace tracker)&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;Each frame was designed to have one byte of header data, and then a stream of &lt;strong&gt;commands&lt;&#x2F;strong&gt; to be either interpreted by the NMOScillator or piped to the SN76489. The frame headers contain flags for song looping, and specify the number of commands each frame contains. Each command in a frame can either be an &lt;strong&gt;SN76489 Command&lt;&#x2F;strong&gt; (of which the byte is sent directly to the SN76489), a &lt;strong&gt;Tempo Change&lt;&#x2F;strong&gt; command, or a &lt;strong&gt;Frame Delay&lt;&#x2F;strong&gt; command (which delays the next frame by a multiple of the Tempo). The type of each command is specified by its &lt;strong&gt;Command Index&lt;&#x2F;strong&gt;, counting down from the number of commands present in the frame. Specific indexes are defined as specific command types, so you can infer what each byte means just by counting how many bytes you’ve already read in the frame.&lt;&#x2F;p&gt;
+&lt;p&gt;That’s a lot to take in, but if you’re interested, I’ve written up a (mostly) complete description of the ROM format &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;QEStudios&#x2F;NMOScillatorCompiler&#x2F;blob&#x2F;master&#x2F;ROM_FORMAT.md&quot;&gt;on my GitHub&lt;&#x2F;a&gt;, along with some example frames. It’ll probably change as I develop the project further.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-2-the-logic-simulation&quot;&gt;Part 2: The Logic Simulation&lt;&#x2F;h1&gt;
+&lt;p&gt;I decided that a good way to test the viability of this ROM format would be to build up a logic circuit for the NMOScillator in Logisim. That way, I could get an intuitive sense of what is&#x2F;isn’t possible with basic logical components.&lt;&#x2F;p&gt;
+&lt;p&gt;This resulted in the following initial logic circuit:&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-logic-diagram-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+    
+        
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-logic-diagram-1.ea5d1f39d05298da.webp&quot; alt=&quot;The logic circuit for the NMOScillator in Logisim&quot; title=&quot;The logic circuit for the NMOScillator in Logisim (Click to open in new tab)&quot; width=&quot;900&quot; height=&quot;241&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;The initial logic circuit designed in Logisim. (Click to open in new tab)&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&quot;&#x2F;files&#x2F;2026-03-11-logic-circuit-1.circ&quot;&gt;Download this circuit here (27.33 KB)&lt;&#x2F;a&gt;   &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;mega.nz&#x2F;file&#x2F;U3UxgALS#hcCFWP6coGT2iBZiCw9umd2EW1elh1i1fJ3nDlfXa3A&quot;&gt;(Mirror)&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The circuit consists of 5 counters, 2 registers, and some glue logic. It appeared to correctly play the basic ROM files I tested it with, and I felt that I had reached a good balance between capability and size with this design. There are some weird quirks of the circuit which may need looking into, such as the Address Counter being clocked at the same time the Command Index is loaded from ROM, which may lead to a race condition if the ROM manages to update its outputs &lt;em&gt;before&lt;&#x2F;em&gt; the Command Index is loaded. However, this may never be an issue, due to the inherent propagation delay the Address Counter and ROM have.&lt;&#x2F;p&gt;
+&lt;p&gt;As of writing this post, I’m porting the design over to &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;hneemann&#x2F;Digital&quot;&gt;Digital&lt;&#x2F;a&gt; with simulations of the real logic chips I’ll be using, for faster performance and a more accurate depiction of the logic.&lt;&#x2F;p&gt;
+&lt;p&gt;I put together this video annotating a simple example ROM running in the Logisim simulator. You can pause to read the text explaining the different stages of playback.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;video-container&quot;&gt;
+
+    
+
+
+
+    
+    
+    
+        
+    
+
+
+    &lt;br &#x2F;&gt;&lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;youtube.com&amp;#x2F;watch?v=9cukEJ25jUs&quot;&gt;Click to watch this video on YouTube.&lt;&#x2F;a&gt;
+
+&lt;video controls playsinline  poster=&quot;&#x2F;files&#x2F;2026-03-11-logic-simulation-annotated-1.webp&quot; preload=&quot;none&quot; alt=&quot;Annotated recording of the Logisim simulation&quot; title=&quot;Annotated recording of the Logisim simulation&quot; width=&quot;900&quot;&gt;
+    &lt;source src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-logic-simulation-annotated-1.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    &lt;p&gt;Your browser doesn&#x27;t support this video format. You can &lt;a href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-logic-simulation-annotated-1.webm&quot;&gt;download the video here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;video&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Note that the highest bit of the Tempo Counter is set to 0 in this video, not 1, to make it run significantly faster for demonstration purposes.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-3-the-compiler&quot;&gt;Part 3: The Compiler&lt;&#x2F;h1&gt;
+&lt;p&gt;Now that I had a working circuit, I needed some songs to test it with. I had planned on using &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;tildearrow.org&#x2F;furnace&quot;&gt;Furnace&lt;&#x2F;a&gt; to compose them, but I had no way of turning them into NMOScillator ROMs. So, I wrote my own compiler to do just that.&lt;&#x2F;p&gt;
+&lt;p&gt;I decided to write the compiler in &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;go.dev&quot;&gt;the Go programming language&lt;&#x2F;a&gt;, partly because I wanted it to be faster than a Python script would be, and partly because I wanted to familiarise myself with the language. I was still very new to Go at the time, and I thought this would be a good opportunity to learn it.&lt;&#x2F;p&gt;
+&lt;p&gt;After spending a little over a month developing the compiler, I was able to generate ROM files for any song I composed in Furnace. The compiler took such a long time to develop because of my desire to make it modular. It uses multiple internal representations for the song data in different parts of the program, meaning it should be easy to write additional parsers for other input filetypes.&lt;&#x2F;p&gt;
+&lt;p&gt;To compile a Furnace song into a ROM file, the compiler follows this process:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The input text file is read, and parsed into equivalent internal structures. Unimportant &#x2F; unused metadata is dropped at this stage.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;The parsed text file structures are processed into a lower-level structure format used to describe NMOScillator songs. Here, note pitches are converted to period values, song speed is converted into Tempo values and Frame Delays, and any skipped notes due to jumping are removed. All song data is now stored as a series of frames containing commands.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Binary ROM data is generated from the processed song data. This is a relatively simple operation, as the NMOScillator song data structure is very similar to the raw ROM data it describes.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;!-- Use noprocess=true so transparency is preserved. The png is small anyway. --&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-compiler-flow-chart-1.png&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-compiler-flow-chart-1.5a37718296efbe23.webp&quot; alt=&quot;Flow chart showing the internal stages of the NMOScillator compiler&quot; title=&quot;Flow chart showing the internal stages of the NMOScillator compiler (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;238&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;This 3-step process keeps the program modular, meaning that, if I wanted to, I could add additional input file formats without much trouble. One interesting format might be MIDI files, though it would need significantly more processing to make it work with the NMOScillator’s requirements.&lt;&#x2F;p&gt;
+&lt;p&gt;The source code for the compiler is available &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;QEStudios&#x2F;NMOScillatorCompiler&quot;&gt;on GitHub here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;video-container&quot;&gt;
+
+    
+
+
+
+    
+    
+        
+    
+    
+
+
+    &lt;br &#x2F;&gt;&lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;youtube.com&amp;#x2F;watch?v=UV6K-tGLZv4&quot;&gt;Click to watch this video on YouTube.&lt;&#x2F;a&gt;
+
+&lt;video controls playsinline loop  poster=&quot;&#x2F;files&#x2F;2026-03-11-compiler.webp&quot; preload=&quot;none&quot; alt=&quot;Example of the compiler being used in a terminal&quot; title=&quot;Example of the compiler being used in a terminal&quot; width=&quot;650&quot;&gt;
+    &lt;source src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-compiler.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    &lt;p&gt;Your browser doesn&#x27;t support this video format. You can &lt;a href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-compiler.webm&quot;&gt;download the video here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;video&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Example compilation of a Furnace song.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-4-the-breadboard-circuit&quot;&gt;Part 4: The Breadboard Circuit&lt;&#x2F;h1&gt;
+&lt;p&gt;As the compiler was working, and the logic simulation showed promise, I decided that the next step would be testing the real SN76489 chips. I had done only minimal prior testing to ensure they weren’t DOA, so I was excited (but also a little nervous) to see how well they would work.&lt;&#x2F;p&gt;
+&lt;p&gt;I put one of the sound chips on a breadboard, alongside an Arduino Nano. I had ordered the SN76489s in a pack of five, so I wasn’t &lt;em&gt;too&lt;&#x2F;em&gt; concerned about breaking one through experimentation (which, thankfully, didn’t happen). After reading the datasheet extensively, I connected the Arduino to the control and data inputs, and wrote some simple code in the Arduino IDE to drive the sound chip with some basic commands. Surprisingly, it worked first try, though I was only looking at waveforms on my oscilloscope.&lt;&#x2F;p&gt;
+&lt;p&gt;After that success, I spent some time writing a more complex program to interpret NMOScillator ROMs and play them on the real SN76489.&lt;&#x2F;p&gt;
+&lt;p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-breadboard-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+    
+        
+    
+    
+    
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-breadboard-1.webp&quot; alt=&quot;NMOScillator test rig with the sound chip and Arduino Nano on a breadboard&quot; title=&quot;NMOScillator test rig with the sound chip and Arduino Nano on a breadboard (Click to open in new tab)&quot; width=&quot;900&quot; height=&quot;363&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-breadboard-top-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+    
+        
+    
+    
+    
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-breadboard-top-1.webp&quot; alt=&quot;Top-down view of the breadboard test rig&quot; title=&quot;Top-down view of the breadboard test rig (Click to open in new tab)&quot; width=&quot;900&quot; height=&quot;435&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Unfortunately, during this time I wasn’t focused on documenting my progress as much, so I don’t have many photos of the breadboard test rig.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;It was around this point where I realised my need for an amplifier circuit to drive a speaker, as the sound chip can’t supply enough current to drive one directly off the audio output pin. I decided on using an &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;LM386&quot;&gt;LM386 Audio Power Amplifier IC&lt;&#x2F;a&gt;, which is very standard and is designed exactly for this purpose. With this being my first time experimenting in audio electronics, I felt quite lost looking through datasheets. Some things felt almost like black magic, like seeing filter circuitry thrown in every place imaginable. I did my best to follow the circuit recommendations I found online, and managed to get the amplifier working well enough, though it was still noticeably noisy.&lt;&#x2F;p&gt;
+&lt;p&gt;I was content with this for a while, and I ended up using the circuit to test a number of songs on real hardware. However, mostly due to using a cheap breadboard, the circuit was both noisy and unstable, which can make it extremely annoying to debug. Because of this, I decided to migrate the circuit onto a PCB, hoping that with proper routing I’d be able to negate most of the interference noise.&lt;&#x2F;p&gt;
+&lt;p&gt;The Arduino code isn’t very well-written so I don’t feel like sharing it at this point. I might release the code if I ever work it into a state I’m happy with, but I don’t plan on spending my time on that right now.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;(I’m planning to eventually invest in some high quality breadboards from &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;busboard.com&#x2F;BB830&quot;&gt;BusBoard&lt;&#x2F;a&gt;, which would fix most of my issues with intermittent connections.)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-5-the-test-rig-pcb&quot;&gt;Part 5: The Test Rig PCB&lt;&#x2F;h1&gt;
+&lt;p&gt;The circuit I was using on the breadboard wasn’t particularly complex, so drawing the schematic for the PCB went relatively smoothly. I took extra care to make sure my amplifier circuitry was suitable, and did as much as I could to minimise noise; if I wasn’t happy with something &lt;em&gt;now&lt;&#x2F;em&gt;, I wouldn’t be happy with it on the actual NMOScillator either.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-test-rig-schematic-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-test-rig-schematic-1.6cf0df2f1c200dd0.webp&quot; alt=&quot;Schematic drawing for the NMOScillator test rig PCB&quot; title=&quot;Schematic drawing for the NMOScillator test rig PCB (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;459&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;Annoyingly, I had somehow managed to burn out the D4 pin on the Arduino Nano I was using, so I decided to design the PCB around it by using A0 instead. I didn’t see this as much of a compromise, because the PCB was only designed to replace the noisy breadboard anyway.&lt;&#x2F;p&gt;
+&lt;p&gt;I designed the PCB to have a small speaker mounted on the back side of it, facing through the slots in the board towards the front. I added a button and an LED, to allow for a basic user interface. Of course, I also included a header to use an external speaker if the built-in speaker didn’t sound good. I also tried rounding my traces for the first time, as inspired by &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;mitxela.com&#x2F;projects&#x2F;melting_kicad&quot;&gt;this project by mitxela&lt;&#x2F;a&gt;. It probably doesn’t make much of a difference to interference or noise, but I thought it looked nice.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-test-rig-pcb-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-test-rig-pcb-1.fd06fc7fe950db16.webp&quot; alt=&quot;Layout for the NMOScillator test rig PCB&quot; title=&quot;Layout for the NMOScillator test rig PCB (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;433&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;If you’re interested in building this PCB for yourself, the design files are available &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;QEStudios&#x2F;SN76489-Test-Rig-PCB&quot;&gt;here on GitHub&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Once I was happy with the PCB layout, I ordered the boards from &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;jlcpcb.com&quot;&gt;JLCPCB&lt;&#x2F;a&gt;. They arrived after around 2 weeks, and as always I was pleased with the production quality. The rounded traces looked very aesthetically pleasing, so I’ll definitely be using that technique on PCBs in the future. I took some glamour shots of the bare board, and then got to assembling it.&lt;&#x2F;p&gt;
+&lt;p&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-blank-pcb-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-blank-pcb-1.d105a4e9de28fe61.webp&quot; alt=&quot;The blank PCB&quot; title=&quot;The blank PCB (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;487&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-melty-traces-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-melty-traces-1.0dddc45daf4c2c2d.webp&quot; alt=&quot;Closeup of the rounded traces on the PCB&quot; title=&quot;Closeup of the rounded traces on the PCB (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;320&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Melty traces!&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I was relieved that the on-board speaker was very easy to solder and fit perfectly onto the PCB. In fact, almost everything on the PCB worked exactly as I had hoped. There was &lt;em&gt;significantly&lt;&#x2F;em&gt; less noise than the breadboard had, and the soldered joints were much more reliable than the touchy cheap breadboard contacts. The Arduino could control the sound chip exactly as I wanted, and the music I could play on it sounded quite good. The built-in speaker on the PCB didn’t do it many favours, though, and I ended up using a larger external speaker whenever I wanted to hear the songs in their best quality. I did accidentally wire the logarithmic potentiometer in reverse on v1.0 of the PCB (which is the version I ordered), but it was an easy fix with two bodge wires (and I fixed it on v1.1 of the board.) Overall, the PCB turned out just as I had wanted, which made me very happy.&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-assembled-pcb-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-assembled-pcb-1.7754316fe5ba40a3.webp&quot; alt=&quot;The assembled PCB&quot; title=&quot;The assembled PCB (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;408&quot; &#x2F;&gt;
+    
+
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-speaker-and-bodge.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2026-03-11-speaker-and-bodge.e9cd014a3ac86631.webp&quot; alt=&quot;Close-up of the built-in speaker and bodge wires&quot; title=&quot;Close-up of the built-in speaker and bodge wires (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;336&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;The speaker mounted on the back, and the bodge fixing the potentiometer connections.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-6-music-showcase&quot;&gt;Part 6: Music Showcase&lt;&#x2F;h1&gt;
+&lt;p&gt;I’ve recorded a few songs I made for the NMOScillator, in both Furnace and on the test rig, for you to enjoy. None of these are original compositions (I’m not very good at writing music, unfortunately), but they were all arranged for the NMOScillator by hand.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;undertale-rude-buster&quot;&gt;Undertale - Rude Buster&lt;&#x2F;h2&gt;
+
+&lt;div class=&quot;video-container&quot;&gt;
+
+    
+
+
+
+    
+    
+        
+    
+    
+
+
+    &lt;br &#x2F;&gt;&lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;youtube.com&amp;#x2F;watch?v=an-_REktqtA&quot;&gt;Click to watch this video on YouTube.&lt;&#x2F;a&gt;
+
+&lt;video controls playsinline  poster=&quot;&#x2F;files&#x2F;2026-03-11-rude-buster-furnace-1.webp&quot; preload=&quot;none&quot; alt=&quot;Screen recording of Rude Buster in Furnace tracker&quot; title=&quot;Screen recording of Rude Buster in Furnace tracker&quot; width=&quot;650&quot;&gt;
+    &lt;source src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-rude-buster-furnace-1.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    &lt;p&gt;Your browser doesn&#x27;t support this video format. You can &lt;a href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-rude-buster-furnace-1.webm&quot;&gt;download the video here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;video&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Furnace screen recording.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;audio-container&quot;&gt;
+&lt;audio controls  src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-rude-buster-recording.ogg&quot; preload=&quot;none&quot; &gt;&lt;&#x2F;audio&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Real test rig audio recording (fade out added in post).&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;&lt;h2 id=&quot;erik-satie-gymnopedie-no-1&quot;&gt;Erik Satie - Gymnopédie No. 1&lt;&#x2F;h2&gt;
+
+&lt;div class=&quot;video-container&quot;&gt;
+
+    
+
+
+
+    
+    
+        
+    
+    
+
+
+    &lt;br &#x2F;&gt;&lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;youtube.com&amp;#x2F;watch?v=cHtsFqRrfxQ&quot;&gt;Click to watch this video on YouTube.&lt;&#x2F;a&gt;
+
+&lt;video controls playsinline  poster=&quot;&#x2F;files&#x2F;2026-03-11-gymnopedie-furnace-1.webp&quot; preload=&quot;none&quot; alt=&quot;Screen recording of Gymnopédie No. 1 in Furnace tracker&quot; title=&quot;Screen recording of Gymnopédie No. 1 in Furnace tracker&quot; width=&quot;650&quot;&gt;
+    &lt;source src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-gymnopedie-furnace-1.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    &lt;p&gt;Your browser doesn&#x27;t support this video format. You can &lt;a href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-gymnopedie-furnace-1.webm&quot;&gt;download the video here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;video&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Furnace screen recording.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;audio-container&quot;&gt;
+&lt;audio controls  src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-gymnopedie-recording.ogg&quot; preload=&quot;none&quot; &gt;&lt;&#x2F;audio&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Real test rig audio recording.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;&lt;h2 id=&quot;scott-joplin-maple-leaf-rag&quot;&gt;Scott Joplin - Maple Leaf Rag&lt;&#x2F;h2&gt;
+
+&lt;div class=&quot;video-container&quot;&gt;
+
+    
+
+
+
+    
+    
+        
+    
+    
+
+
+    &lt;br &#x2F;&gt;&lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;youtube.com&amp;#x2F;watch?v=HaUrlRjwuvk&quot;&gt;Click to watch this video on YouTube.&lt;&#x2F;a&gt;
+
+&lt;video controls playsinline  poster=&quot;&#x2F;files&#x2F;2026-03-11-maple-leaf-rag-furnace-1.webp&quot; preload=&quot;none&quot; alt=&quot;Screen recording of Maple Leaf Rag in Furnace tracker&quot; title=&quot;Screen recording of Maple Leaf Rag in Furnace tracker&quot; width=&quot;650&quot;&gt;
+    &lt;source src=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-maple-leaf-rag-furnace-1.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    &lt;p&gt;Your browser doesn&#x27;t support this video format. You can &lt;a href=&quot;&amp;#x2F;files&amp;#x2F;2026-03-11-maple-leaf-rag-furnace-1.webm&quot;&gt;download the video here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;video&gt;
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Furnace screen recording.&lt;&#x2F;em&gt;
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;em&gt;I didn’t record any audio of the Maple Leaf Rag on the test rig, sorry!&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I would have liked to record a &lt;em&gt;video&lt;&#x2F;em&gt; of the test rig playing songs, but it’s really hard to get good audio quality with little background noise out of a video recording.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;part-7-next-steps&quot;&gt;Part 7: Next Steps&lt;&#x2F;h1&gt;
+&lt;p&gt;Whew! That ended up being a long blog post. Now that I’ve had some experience with the SN76489, I feel more confident that I’ll be able to see this project through.&lt;&#x2F;p&gt;
+&lt;p&gt;For now, I’ll do my best to finish designing the real IC-based NMOScillator circuit in Digital. I’ll have to hunt down any stray race conditions in the circuit, because I’m worried they could become a problem down the road. I also want to figure out a system for pre-setting the NMOScillator’s Address Counter, so multiple songs can be packed into the same ROM with their own address offsets.&lt;&#x2F;p&gt;
+&lt;p&gt;Stay tuned for more on this project! If you’d like, you can subscribe to my blog’s &lt;a href=&quot;&#x2F;rss.xml&quot;&gt;rss&lt;&#x2F;a&gt; or &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;atom&lt;&#x2F;a&gt; feeds to stay updated on the NMOScillator, and all my other posts.&lt;&#x2F;p&gt;
+&lt;p&gt;-skm&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;useful-links&quot;&gt;Useful Links&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;QEStudios&#x2F;NMOScillatorCompiler&quot;&gt;NMOScillator Compiler GitHub repository&lt;&#x2F;a&gt; (Source for the NMOScillator Compiler program)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;QEStudios&#x2F;SN76489-Test-Rig-PCB&quot;&gt;NMOScillator Test Rig PCB GitHub repository&lt;&#x2F;a&gt; (Design files for the NMOScillator Test Rig PCB)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.vgmpf.com&#x2F;Wiki&#x2F;index.php?title=SN76489&quot;&gt;Video Game Music Preservation Foundation page for the SN76489&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Texas_Instruments_SN76489&quot;&gt;Wikipedia page for the SN76489&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;wiki.console5.com&#x2F;tw&#x2F;images&#x2F;b&#x2F;b0&#x2F;SN76489.pdf&quot;&gt;SN76489AN Datasheet&#x2F;Manual&lt;&#x2F;a&gt; (The best scan I could find of this datasheet)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.vgmpf.com&#x2F;Wiki&#x2F;images&#x2F;9&#x2F;9c&#x2F;SN76494_-_Manual.pdf&quot;&gt;SN76494 &#x2F; SN76496 Datasheet&#x2F;Manual&lt;&#x2F;a&gt; (Similar to the SN76489, but with different clock rates and an additional Audio In pin)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.ti.com&#x2F;lit&#x2F;ds&#x2F;symlink&#x2F;lm386.pdf&quot;&gt;LM386 Audio Power Amplifier IC Datasheet&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;tildearrow.org&#x2F;furnace&quot;&gt;Furnace homepage&lt;&#x2F;a&gt; &#x2F; &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tildearrow&#x2F;furnace&quot;&gt;Furnace GitHub&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;em&gt;All photos in this post were taken by me.&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;em&gt;The songs featured here are my own arrangements. The original compositions belong to their respective composers.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

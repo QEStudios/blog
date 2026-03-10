@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>SKM GEEK&#x27;s Blog - radxa rock</title>
+    <subtitle>Hello! Welcome to my place for putting Things. I share my projects, thoughts, and anything else I feel like here.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://blog.skmgeek.com/tags/radxa-rock/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://blog.skmgeek.com/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-03-11T06:37:00+11:00</updated>
+    <id>https://blog.skmgeek.com/tags/radxa-rock/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Environode Network Pt. 2: Breadboards, Grafana, and ROCKs</title>
+        <published>2025-09-23T22:53:00+10:00</published>
+        <updated>2026-03-11T06:37:00+11:00</updated>
+        
+        <author>
+          <name>
+            
+              SKM GEEK
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.skmgeek.com/2025-09-23-environode-network-pt-2-breadboards-grafana-and-rocks/"/>
+        <id>https://blog.skmgeek.com/2025-09-23-environode-network-pt-2-breadboards-grafana-and-rocks/</id>
+        
+        <content type="html" xml:base="https://blog.skmgeek.com/2025-09-23-environode-network-pt-2-breadboards-grafana-and-rocks/">&lt;h1 id=&quot;an-update-on-my-environode-project&quot;&gt;An update on my Environode project.&lt;&#x2F;h1&gt;
+&lt;p&gt;Updates on my current Environode network setup, featuring my new ROCK 4C+.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;My &lt;a href=&quot;&#x2F;2025-05-20-environode-network-introduction&quot;&gt;previous blog post&lt;&#x2F;a&gt; covered the initial idea for the Environode project. Since then, I’ve made some progress and am now ready to make a second blog post detailing the latest updates. I’ve had two breadboarded Environodes running for the past 3 months now with only some minor issues, and I’m very happy with how it’s all turned out so far.&lt;&#x2F;p&gt;
+&lt;p&gt;After writing that first blog post, I spent some time on the interface and code for the Environodes. The code running on the Environodes themselves is written in &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;micropython.org&quot;&gt;MicroPython&lt;&#x2F;a&gt;, an implementation of Python designed to run on microcontrollers. The server code that the Environodes communicate with is written in Python. I chose these languages because I’m very familiar with them, and although they might not be the most widely respected choice for larger projects, it sped up development quite significantly.&lt;&#x2F;p&gt;
+&lt;p&gt;The breadboard Environode design looks like this:&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-09-23-pico-breadboard-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-09-23-pico-breadboard-1.bbd01217821f9174.webp&quot; alt=&quot;Image of an Environode on a breadboard&quot; title=&quot;Image of an Environode on a breadboard (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;396&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;The breadboarded Environode using the Raspberry Pi Pico W clone&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;I chose to use a blue-and-yellow I&lt;sup&gt;2&lt;&#x2F;sup&gt;C OLED display for the screen, as the top 16 pixels are yellow, meaning I can show a constant status bar at the top while the rest of the display is reserved for other information. I also added an LDR to allow for dimming the screen when the environment brightness is lower, and the screen can also shut off after a certain amount of time to reduce power and prolong the screen’s lifespan.&lt;&#x2F;p&gt;
+&lt;p&gt;There are still issues with the BMP280 sensor, so I haven’t enabled pressure logging yet. There’s a chance it may be caused by the conflicting I&lt;sup&gt;2&lt;&#x2F;sup&gt;C pullups on the screen and sensor modules. However, I haven’t noticed any issues with the AHT20 sensor at all, and it’s been running without issue the whole time.&lt;&#x2F;p&gt;
+&lt;p&gt;I initially built the Environodes on breadboards as a proof-of-concept, and I was not planning on sharing the breadboard design, hoping that I would quickly move them onto dedicated PCBs. I ended up procrastinating moving them to PCBs for 3 months, and those breadboard Environodes have been consistently running the whole time. Because of this, I feel confident in releasing the (very simple) schematic for them now:&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-09-23-pico-schematic-breadboard-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-09-23-pico-schematic-breadboard-1.c721d845365f7e59.webp&quot; alt=&quot;Schematic drawing for the original breadboard version of the Raspberry Pi Pico Environode&quot; title=&quot;Schematic drawing for the original breadboard version of the Raspberry Pi Pico Environode (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;438&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Original schematic for the breadboarded Raspberry Pi Pico Environode&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&quot;&#x2F;files&#x2F;2025-09-23-pico-schematic-breadboard-1.kicad_sch&quot;&gt;Download this schematic here (92.30 KB)&lt;&#x2F;a&gt;   &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;mega.nz&#x2F;file&#x2F;N68lwQxY#_WO86jBCGoBulecV6tE1MAH59I2Yc3qlqqoCdPWa0pY&quot;&gt;(Mirror)&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;This schematic is a 1:1 diagram of how &lt;em&gt;I&lt;&#x2F;em&gt; prototyped the Environodes. However, this original design has some flaws:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;I&lt;sup&gt;2&lt;&#x2F;sup&gt;C modules are powered with 5V while the data lines are driven at 3.3V, which might cause the Pico to misbehave or get damaged if the data lines are pulled to 5V.&lt;&#x2F;li&gt;
+&lt;li&gt;Both I&lt;sup&gt;2&lt;&#x2F;sup&gt;C modules have their own pullups on the breakout boards, which can lead to bad signal integrity.&lt;&#x2F;li&gt;
+&lt;li&gt;The buttons rely on internal pullups in the Pico, which may not be as reliable as hardware pullups.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;As such, I would recommend using this adjusted schematic if you plan on building your own Environodes on breadboards:&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-09-23-pico-schematic-breadboard-adjusted-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+        
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-09-23-pico-schematic-breadboard-adjusted-1.f14c64adc7807397.webp&quot; alt=&quot;Schematic drawing for the adjusted breadboard version of the Raspberry Pi Pico Environode&quot; title=&quot;Schematic drawing for the adjusted breadboard version of the Raspberry Pi Pico Environode (Click to open in new tab)&quot; width=&quot;650&quot; height=&quot;438&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Adjusted schematic for the breadboarded Raspberry Pi Pico Environode&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&quot;&#x2F;files&#x2F;2025-09-23-pico-schematic-breadboard-adjusted-1.kicad_sch&quot;&gt;Download this schematic here (110.34 KB)&lt;&#x2F;a&gt;   &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;mega.nz&#x2F;file&#x2F;171B1LRR#8RMsxCGgbbrFwqAU_ElscEDCsH1nw7QTBsazQOunJnI&quot;&gt;(Mirror)&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;As mentioned in &lt;a href=&quot;&#x2F;2025-05-20-environode-network-introduction&quot;&gt;the previous blog post&lt;&#x2F;a&gt;, I was using my Raspberry Pi 3B+ as the central server that the Environodes communicate with and send data to. However, a month later I stumbled across a great deal for a &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;radxa.com&#x2F;products&#x2F;rock4&#x2F;4cp&quot;&gt;Radxa ROCK 4C+&lt;&#x2F;a&gt; from &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.jaycar.com.au&#x2F;p&#x2F;XC9300&quot;&gt;Jaycar for $39 AUD&lt;&#x2F;a&gt; (excluding shipping). This was under half of the RRP at the time and cheaper than any other comparable SBC, so I immediately bought one. This turned out to be a &lt;em&gt;great&lt;&#x2F;em&gt; decision as it easily outperforms my Raspberry Pi 3B+ in every aspect. I soon after moved the server program onto the ROCK and it’s been running faithfully ever since. I almost wish I grabbed a second one while I could!&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-09-23-pi-rock-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+        
+    
+    
+    
+    
+    
+        
+            
+        
+        
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;https:&amp;#x2F;&amp;#x2F;blog.skmgeek.com&amp;#x2F;processed_images&amp;#x2F;2025-09-23-pi-rock-1.28ce96372217eb4c.webp&quot; alt=&quot;Picture showing my new Radxa ROCK 4C+ sitting next to my Raspberry Pi on my shelf&quot; title=&quot;Picture showing my new Radxa ROCK 4C+ sitting next to my Raspberry Pi on my shelf (Click to open in new tab)&quot; width=&quot;400&quot; height=&quot;395&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;My new ROCK 4C+ (right) sitting next to my Raspberry Pi (left) in an identical case&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;For visualising the data coming in from the Environodes, I opted to use &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;grafana.com&quot;&gt;Grafana&lt;&#x2F;a&gt;, as it’s powerful and allows for advanced data visualisation. This is something that the Raspberry Pi 3B+ would struggle at, but the ROCK was up for the task. It took a while to setup, as the latest precompiled version of Grafana at the time used instructions that didn’t exist on the RK3399-T that the ROCK 4C+ uses. I ended up using an older version of Grafana (specifically v8.5.22) which didn’t rely on those instructions. I could have recompiled Grafana from source, but I decided it wasn’t worth the effort at the time.&lt;&#x2F;p&gt;
+&lt;p&gt;After a little configuration, my Grafana dashboard looks like this:&lt;&#x2F;p&gt;
+
+&lt;div class=&quot;img-container&quot;&gt;&lt;a class=&quot;image-click&quot; href=&quot;&amp;#x2F;files&amp;#x2F;2025-09-23-grafana-1.webp&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;
+
+
+    
+
+
+    
+    
+    
+        
+    
+    
+    
+        
+    
+    
+        
+        &lt;img loading=&quot;lazy&quot; src=&quot;&amp;#x2F;files&amp;#x2F;2025-09-23-grafana-1.webp&quot; alt=&quot;Grafana dashboard showing data from the past 7 days&quot; title=&quot;Grafana dashboard showing data from the past 7 days (Click to open in new tab)&quot; width=&quot;900&quot; height=&quot;376&quot; &#x2F;&gt;
+    
+
+
+    &lt;br &#x2F;&gt;&lt;em&gt;Grafana dashboard showing 7 days of historical data&lt;&#x2F;em&gt;
+
+&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+&lt;p&gt;And thanks to the flexibility of Grafana, I can easily add more visualisations or data points without much hassle.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Running Environodes on breadboards is fine, but having dedicated PCBs is even better. I started work on custom PCBs for the Environodes a little while ago, and I’m currently waiting on the first boards to arrive now. I won’t release any of the schematics or PCB designs just yet, as there may be errors that I want to iron out before sharing them. Once it’s all ready, I plan to release the design files under &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by&#x2F;4.0&#x2F;&quot;&gt;CC BY 4.0&lt;&#x2F;a&gt; and the code under &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;opensource.org&#x2F;license&#x2F;mit&#x2F;&quot;&gt;MIT&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;I have plenty more planned for this project, so if you want to stay up to date you can subscribe to my blog’s &lt;a href=&quot;&#x2F;rss.xml&quot;&gt;rss&lt;&#x2F;a&gt; or &lt;a href=&quot;&#x2F;atom.xml&quot;&gt;atom&lt;&#x2F;a&gt; feeds.&lt;&#x2F;p&gt;
+&lt;p&gt;-skm&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;All images in this post were taken by me.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;&lt;em&gt;Update &lt;time datetime=&quot;2026-03-11T06:37:00+11:00&quot; class=&quot;date-time&quot;&gt;2026-03-11 06:37&lt;&#x2F;time&gt;: Corrected filesize hints.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>
