@@ -1,9 +1,9 @@
 {% set video_path = "/files/" ~ src %}
 <div class="video-container">
 {% if title %}
-    {% set full_title = title ~ " (Click to open in new tab)" %}
+    {% set full_title = title %}
 {% else %}
-    {% set full_title = alt ~ " (Click to open in new tab)" %}
+    {% set full_title = alt %}
 {% endif %}
 {% set s = 650 %}
 {% if size %}
