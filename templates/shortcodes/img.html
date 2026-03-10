@@ -1,5 +1,5 @@
 {% set image_path = "/files/" ~ src %}
-<div class="img-container"><a class="image-click" href="{{image_path}}">
+<div class="img-container"><a class="image-click" href="{{image_path}}" rel="noopener" target="_blank">
 {% set mdata = get_image_metadata(path=image_path)%}
 {% if title %}
     {% set full_title = title ~ " (Click to open in new tab)" %}
