@@ -2,7 +2,8 @@
 
 @use "variables";
 
-img {
+img,
+video {
     border-radius: 3px;
 }
 
@@ -12,7 +13,8 @@ img {
 }
 
 .video-container,
-.img-container {
+.img-container,
+.audio-container {
     text-align: center;
     margin: 0 auto 0.5rem;
 
@@ -23,8 +25,4 @@ img {
 
 .video-container>video {
     max-width: 100%;
-}
-
-video {
-    border-radius: 3px;
 }

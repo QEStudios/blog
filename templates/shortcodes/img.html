@@ -17,7 +17,7 @@
         {% set s = 900 %}
     {% endif %}
     {% set r = s * 2 %}
-    {% if (r >= mdata.width) and (r >= mdata.height) %}
+    {% if noprocess or ((r >= mdata.width) and (r >= mdata.height)) %}
         {% set url = image_path %}
     {% else %}
         {% if not quality %}
@@ -28,10 +28,10 @@
     {% endif %}
     {% if mdata.width >= mdata.height %}
         {% set h = s * (mdata.height / mdata.width) | int%}
-        <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" />
+        <img loading="lazy" src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{s}}" height="{{h}}" />
     {% else %}
         {% set w = s * (mdata.width / mdata.height) | int%}
-        <img src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" />
+        <img loading="lazy" src="{{url}}" alt="{{alt}}" title="{{full_title}}" width="{{w}}" height="{{s}}" />
     {% endif %}
 {% else %}
     <img src="{{image_path}}" alt="{{alt}}" title="{{full_title}}" width="{{mdata.width}}" height="{{mdata.height}}" />

@@ -51,7 +51,9 @@ blockquote {
   }
 }
 
-img {
+img,
+video,
+audio {
   display: block;
   margin: 0 0 1rem;
   max-width: 100%;

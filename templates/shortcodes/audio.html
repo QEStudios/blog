@@ -1,0 +1,7 @@
+{% set audio_path = "/files/" ~ src %}
+<div class="audio-container">
+<audio controls {% if loop %}loop {% endif %} src="{{audio_path}}" preload="none" {% if title %}title="{{title}}"{% endif %}></audio>
+{% if caption %}
+    <br /><em>{{caption}}</em>
+{% endif %}
+</div>
