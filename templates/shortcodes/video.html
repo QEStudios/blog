@@ -17,6 +17,9 @@
         {% set s = 900 %}
     {% endif %}
 {% endif %}
+{% if youtube %}
+    <br /><a href="{{youtube}}">Click to watch this video on YouTube.</a>
+{% endif %}
 <video controls playsinline {% if loop %}loop {% endif %} {% if poster %}poster="/files/{{poster}}"{% endif %} preload="none" alt="{{alt}}" title="{{full_title}}" width="{{s}}">
     <source src="{{video_path}}" type="{{type}}">
     <p>Your browser doesn't support this video format. You can <a href="{{video_path}}">download the video here</a>.</p>
