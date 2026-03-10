@@ -66,7 +66,7 @@ This resulted in the following initial logic circuit:
 
 {{ img(src="2026-03-11-logic-diagram-1.webp", alt="The logic circuit for the NMOScillator in Logisim", caption="The initial logic circuit designed in Logisim. (Click to open in new tab)", size="large") }}
 
-{{ file_with_mirror(text="Download this circuit here (28.02 KB)", path="2026-03-11-logic-circuit-1.circ", mirror="https://mega.nz/file/ZvNxXQgb#fxqgNYK9E5f5GCnFPk4NYhTR_TDH6CqTrvVhbD1efc4") }}
+{{ file_with_mirror(text="Download this circuit here (27.33 KB)", path="2026-03-11-logic-circuit-1.circ", mirror="https://mega.nz/file/U3UxgALS#hcCFWP6coGT2iBZiCw9umd2EW1elh1i1fJ3nDlfXa3A") }}
 
 The circuit consists of 5 counters, 2 registers, and some glue logic. It appeared to correctly play the basic ROM files I tested it with, and I felt that I had reached a good balance between capability and size with this design. There are some weird quirks of the circuit which may need looking into, such as the Address Counter being clocked at the same time the Command Index is loaded from ROM, which may lead to a race condition if the ROM manages to update its outputs *before* the Command Index is loaded. However, this may never be an issue, due to the inherent propagation delay the Address Counter and ROM have.
 
