@@ -39,6 +39,7 @@ The plan was to use a ROM (of sorts) to store song data, and then some logic cou
 - [Part 2: The Logic Simulation](#part-2-the-logic-simulation)
 - [Part 3: The Compiler](#part-3-the-compiler)
 - [Part 4: The Breadboard](#part-4-the-breadboard)
+- [Part 5: The Test Rig PCB](#part-5-the-test-rig-pcb)
 - [Useful Links](#useful-links)
 
 ---
@@ -73,7 +74,7 @@ As of writing this post, I'm porting the design over to [Digital](https://github
 
 I put together this video annotating a simple example ROM running in the Logisim simulator. You can pause to read the text explaining the different stages of playback.
 
-{{ video(src="2026-02-26-logic-simulation-annotated-1.webm", alt="Annotated recording of the Logisim simulation", caption="", size="large" type="video/webm") }}
+{{ video(src="2026-02-26-logic-simulation-annotated-1.webm", poster="2026-02-26-logic-simulation-annotated-1.webp", alt="Annotated recording of the Logisim simulation", caption="", size="large" type="video/webm") }}
 [Click to watch this video on YouTube.](https://youtube.com/watch?v=9cukEJ25jUs)  
 (Note that the highest bit of the Tempo Counter is set to 0 in this video, not 1, to make it run significantly faster for demonstration purposes)
 
@@ -103,8 +104,10 @@ This 3-step process keeps the program modular, meaning that, if I wanted to, I c
 
 The source code for the compiler is available [on GitHub here](https://github.com/QEStudios/NMOScillatorCompiler).
 
-{{ video(src="2026-02-26-compiler.webm", alt="Example of the compiler being used in a terminal", caption="Example compilation of a Furance song.", size="medium" type="video/webm" loop=true) }}
+{{ video(src="2026-02-26-compiler.webm", poster="2026-02-26-compiler.webp", alt="Example of the compiler being used in a terminal", caption="Example compilation of a Furance song.", size="medium" type="video/webm" loop=true) }}
 [Click to watch this video on YouTube.](https://youtube.com/watch?v=UV6K-tGLZv4)
+
+---
 
 ## Part 4: The Breadboard
 
@@ -123,8 +126,41 @@ It was around this point where I realised my need for an amplifier circuit to dr
 
 I was content with this for a while, and I ended up using the circuit to test a number of songs on real hardware. However, mostly due to using a cheap breadboard, the circuit was both noisy and unstable. And debugging a circuit which has intermittent connections is the *worst*. And so I decided to migrate the circuit onto a PCB, hoping that with proper routing I'd be able to negate most of the interference noise.
 
+The Arduino code isn't very well-written so I don't feel like sharing it at this point. I might release the code if I ever work it into a state I'm happy with, but I don't plan on spending my time on that right now.
+
 *(I'm planning to eventually invest in some high quality breadboards from [BusBoard](https://busboard.com/BB830), which would fix most of my issues with intermittent connections.)*
 
+---
+
+## Part 5: The Test Rig PCB
+
+The circuit I was using on the breadboard wasn't particularly complex, so drawing the schematic for the PCB went relatively smoothly. I took extra care to make sure my amplifier circuitry was suitable, and did as much as I could to minimise noise; if I wasn't happy with something *now*, I wouldn't be happy with it on the actual NMOScillator either.
+
+{{ img(src="2026-02-26-test-rig-schematic-1.webp", alt="Schematic drawing for the NMOScillator test rig PCB", size="medium") }}
+
+Annoyingly, I had somehow managed to burn out the D4 pin on the Arduino Nano I was using, so I decided to design the PCB around it by using A0 instead. I didn't see this as much of a compromise, because the PCB was only designed to replace the noisy breadboard anyway.
+
+I designed the PCB to have a small speaker mounted on the back side of it, facing through the slots in the board towards the front. I added a button and an LED, to allow for a basic user interface. Of course, I also included a header to use an external speaker if the built-in speaker didn't sound good. I also tried rounding my traces for the first time, as inspired by [this project by mitxela](https://mitxela.com/projects/melting_kicad). It probably doesn't make much of a difference to interference or noise, but I thought it looked nice.
+
+{{ img(src="2026-02-26-test-rig-pcb-1.webp", alt="Layout for the NMOScillator test rig PCB", size="medium") }}
+
+If you're interested in building this PCB for yourself, the design files are available [here on GitHub](https://github.com/QEStudios/SN76489-Test-Rig-PCB).
+
+---
+
+Once I was happy with the PCB layout, I ordered the boards from [JLCPCB](https://jlcpcb.com). They arrived after around 2 weeks, and as always I was pleased with the production quality. The melted traces looked very aesthetically pleasing, so I'll definitely be using that technique on PCBs in the future. I took some glamour shots of the bare board, and then got to assembling it.
+
+{{ img(src="2026-02-26-blank-pcb-1.webp", alt="The blank PCB", size="medium") }}
+{{ img(src="2026-02-26-melty-traces-1.webp", alt="Closeup of the rounded tracks on the PCB", caption="Melty traces!", size="medium") }}
+
+I was relieved that the on-board speaker was very easy to solder and fit perfectly onto the PCB. In fact, almost everything on the PCB worked exactly as I had hoped. There was *significantly* less noise than the breadboard had, and the soldered joints were much more reliable than the touchy cheap breadboard contacts. The Arduino could control the sound chip exactly as I wanted, and the music I could play on it sounded quite good. The built-in speaker on the PCB didn't do it many favours, though, and I ended up using a larger external speaker whenever I wanted to hear the songs in their best quality. I did accidentally wire the potentiometer in reverse on v1.0 of the PCB (which is the version I ordered), but it was an easy fix with two bodge wires, and I fixed it in v1.1. Overall, the PCB turned out just as I had wanted, which made me very happy.
+
+{{ img(src="2026-02-26-assembled-pcb-1.webp", alt="The assembled PCB", size="medium") }}
+
+{{ img(src="2026-02-26-speaker-and-bodge.webp", alt="Test", caption="The speaker mounted on the back, and the bodge fixing the potentiometer connections.", size="medium") }}
+
+
+---
 
 # TODO set part number
 ## Part X: Music Showcase
@@ -136,11 +172,7 @@ I've recorded a few songs I made for the NMOScillator for you to enjoy. None of 
 
 
 # TODO:
-  - compiler
   - furnace composing
-  - arduino testing (breadboard) + arduino code
-    - breadboard is low quality so connections were noisy and intermittent which made testing much harder
-  - doing amplifier circuitry for the first time
   - making it into a pcb for better noise and because it looks pretty
   - DATE
     - filename
@@ -150,7 +182,8 @@ I've recorded a few songs I made for the NMOScillator for you to enjoy. None of 
 
 ## Useful Links
 
-- [NMOScillator Compiler GitHub page](https://github.com/QEStudios/NMOScillatorCompiler)
+- [NMOScillator Compiler GitHub repository](https://github.com/QEStudios/NMOScillatorCompiler)
+- [NMOScillator Test Rig PCB GitHub repository](https://github.com/QEStudios/SN76489-Test-Rig-PCB)
 - [Video Game Music Preservation Foundation page for the SN76489](https://www.vgmpf.com/Wiki/index.php?title=SN76489)
 - [Wikipedia page for the SN76489](https://en.wikipedia.org/wiki/Texas_Instruments_SN76489)
 - [SN76489AN Manual](https://wiki.console5.com/tw/images/b/b0/SN76489.pdf) (The best scan I could find of this datasheet)
