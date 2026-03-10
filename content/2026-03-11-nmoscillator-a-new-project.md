@@ -154,7 +154,7 @@ I was relieved that the on-board speaker was very easy to solder and fit perfect
 
 {{ img(src="2026-03-11-assembled-pcb-1.webp", alt="The assembled PCB", size="medium") }}
 
-{{ img(src="2026-03-11-speaker-and-bodge.webp", alt="Test", caption="The speaker mounted on the back, and the bodge fixing the potentiometer connections.", size="medium") }}
+{{ img(src="2026-03-11-speaker-and-bodge.webp", alt="Close-up of the built-in speaker and bodge wires", caption="The speaker mounted on the back, and the bodge fixing the potentiometer connections.", size="medium") }}
 
 
 ---
