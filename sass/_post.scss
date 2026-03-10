@@ -40,14 +40,20 @@
   }
 
   img,
-  video {
+  video,
+  audio {
     margin: 0 auto 0;
-    height: auto;
     object-fit: contain;
   }
 
+  img,
+  video {
+    height: auto;
+  }
+
   img~em,
-  video~em {
+  video~em,
+  audio~em {
     color: variables.$default-shade;
     display: block;
     font-family: variables.$sans-serif;

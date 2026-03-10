@@ -1,9 +1,9 @@
 {% set video_path = "/files/" ~ src %}
 <div class="video-container">
 {% if title %}
-    {% set full_title = title ~ " (Click to open in new tab)" %}
+    {% set full_title = title %}
 {% else %}
-    {% set full_title = alt ~ " (Click to open in new tab)" %}
+    {% set full_title = alt %}
 {% endif %}
 {% set s = 650 %}
 {% if size %}
@@ -16,6 +16,9 @@
     {% if size == "large" %}
         {% set s = 900 %}
     {% endif %}
+{% endif %}
+{% if youtube %}
+    <br /><a href="{{youtube}}">Click to watch this video on YouTube.</a>
 {% endif %}
 <video controls playsinline {% if loop %}loop {% endif %} {% if poster %}poster="/files/{{poster}}"{% endif %} preload="none" alt="{{alt}}" title="{{full_title}}" width="{{s}}">
     <source src="{{video_path}}" type="{{type}}">
